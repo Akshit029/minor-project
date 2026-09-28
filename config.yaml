@@ -1,0 +1,64 @@
+region:
+  name: "Jammu and Kashmir"
+  north: 38.0
+  south: 31.0
+  west: 73.0
+  east: 81.0
+
+districts:
+  Srinagar:
+    lat: 34.0837
+    lon: 74.7973
+  Jammu:
+    lat: 32.7266
+    lon: 74.8570
+  Anantnag:
+    lat: 33.7311
+    lon: 75.1487
+  Baramulla:
+    lat: 34.2090
+    lon: 74.3429
+
+gfs:
+  start_date: "2026-09-15"
+  end_date: "2026-09-19"
+  cycles: ["00", "06", "12", "18"]
+  max_forecast_hour: 168
+  forecast_interval: 3
+  variables:
+    temperature: "TMP:2 m above ground"
+    precipitation: "APCP:surface"
+  test_mode:
+    start_date: "2026-09-15"
+    end_date: "2026-09-15"
+    cycles: ["00"]
+    max_forecast_hour: 12
+    forecast_interval: 3
+
+era5:
+  start_date: "2026-01-01"
+  end_date: "2026-08-31"
+  variables:
+    - "2m_temperature"
+    - "total_precipitation"
+  test_mode:
+    start_date: "2026-09-15"
+    end_date: "2026-09-16"
+
+anomaly:
+  z_threshold: 3.0
+  robust_z_threshold: 3.5
+
+quality:
+  temp_min_c: -40.0
+  temp_max_c: 55.0
+  precip_min_mm: 0.0
+  precip_max_mm: 500.0
+
+output_dirs:
+  raw_gfs: "data/raw/gfs"
+  raw_era5: "data/raw/era5"
+  processed: "data/processed"
+  figures: "outputs/figures"
+  tables: "outputs/tables"
+  reports: "outputs/reports"

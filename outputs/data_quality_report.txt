@@ -1,0 +1,31 @@
+======================================================================
+METEOROLOGICAL DATA QUALITY VERIFICATION REPORT
+Target Region: Jammu & Kashmir (Srinagar, Jammu, Anantnag, Baramulla)
+Generated: 2026-09-28 00:35:53 UTC
+======================================================================
+
+DATASET: NOAA GFS Forecast
+---------------------------------------------
+  Total Observations:        44
+  Duplicate Records:         0
+  Missing Temperature:       0 (0.0%)
+  Missing Precipitation:     0 (0.0%)
+  Temperature Range:         [10.98 °C, 33.92 °C] (Mean: 20.1 °C)
+  Precipitation Range:       [0.0 mm, 7.12 mm] (Mean: 0.71 mm)
+  Invalid / Out-of-Bounds:   0
+  Temporal Span:             2026-09-15 00:00:00 to 2026-09-16 06:00:00 (1.25 days)
+  Districts Covered (4):    Anantnag, Baramulla, Jammu, Srinagar
+
+DATASET: ECMWF ERA5 Reanalysis
+---------------------------------------------
+  Total Observations:        192
+  Duplicate Records:         0
+  Missing Temperature:       0 (0.0%)
+  Missing Precipitation:     0 (0.0%)
+  Temperature Range:         [17.48 °C, 31.73 °C] (Mean: 24.32 °C)
+  Precipitation Range:       [0.0 mm, 9.16 mm] (Mean: 0.27 mm)
+  Invalid / Out-of-Bounds:   0
+  Temporal Span:             2026-09-15 00:00:00 to 2026-09-16 23:00:00 (1.96 days)
+  Districts Covered (4):    Anantnag, Baramulla, Jammu, Srinagar
+
+======================================================================

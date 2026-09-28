@@ -1,0 +1,35 @@
+# Python virtual environment
+.venv/
+venv/
+ENV/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Data and large files
+data/raw/gfs/*.grb2
+data/raw/gfs/*.grib2
+data/raw/gfs/*.idx
+data/raw/era5/*.nc
+data/raw/era5/*.grib
+
+# Keep directory structures
+!data/raw/gfs/.gitkeep
+!data/raw/era5/.gitkeep
+!data/processed/.gitkeep
+!outputs/figures/.gitkeep
+!outputs/tables/.gitkeep
+!outputs/reports/.gitkeep
+
+# Credentials
+.cdsapirc
+*.env
+credentials.json
+
+# IDE and OS
+.DS_Store
+.vscode/
+.idea/
+*.swp
