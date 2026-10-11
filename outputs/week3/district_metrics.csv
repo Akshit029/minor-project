@@ -1,0 +1,5 @@
+MAE,RMSE,Bias,Median_AE,Std_Error,sample_count,unique_init_cycles,district,variable
+6.93,7.14,-6.93,7.21,1.804,11,1,Anantnag,temperature_c
+6.762,6.947,-6.762,6.68,1.67,11,1,Baramulla,temperature_c
+2.874,3.278,2.37,2.32,2.375,11,1,Jammu,temperature_c
+5.544,5.925,-5.544,5.99,2.193,11,1,Srinagar,temperature_c

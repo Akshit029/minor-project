@@ -1,0 +1,2 @@
+variable,gfs_total_rows,era5_total_rows,matched_pairs,rejected_missing_forecast,rejected_missing_reference,unique_districts,unique_init_cycles
+temperature_c,44,192,44,0,0,4,1

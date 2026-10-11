@@ -1,0 +1,4 @@
+variable,supported,gfs_available,era5_available,units,notes
+temperature_c,True,True,True,°C,Direct 2m instantaneous temperature matched across grid points.
+precipitation_mm,True,True,True,mm,Caution: GFS precipitation accumulation represents step accumulation (3-6h intervals) whereas ERA5 represents hourly accumulated depth. Direct unaligned subtraction requires accumulation aggregation.
+pressure_hpa,False,False,False,hPa,Pressure variable is absent from downloaded local ERA5 and GFS subsets. Documented as unsupported by current dataset without fabricating observations.

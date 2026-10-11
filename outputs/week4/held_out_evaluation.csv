@@ -1,0 +1,7 @@
+district,lead_day,predicted_reliability_R,test_sample_count,test_MAE,test_normalized_error
+Jammu,1,0.0917,1,5.81,2.905
+Srinagar,1,0.0367,1,5.31,2.655
+Anantnag,2,,3,8.29,4.145
+Baramulla,2,,3,7.407,3.703
+Jammu,2,,3,1.59,0.795
+Srinagar,2,,3,7.28,3.64

@@ -1,0 +1,9 @@
+district,lead_day,learned_bias,training_sample_count,provenance
+Anantnag,1,-6.42,8,district_lead_day
+Anantnag,2,-3.877,30,global_regional_fallback
+Baramulla,1,-6.52,8,district_lead_day
+Baramulla,2,-3.877,30,global_regional_fallback
+Jammu,1,3.004,7,district_lead_day
+Jammu,2,-3.877,30,global_regional_fallback
+Srinagar,1,-4.833,7,district_lead_day
+Srinagar,2,-3.877,30,global_regional_fallback

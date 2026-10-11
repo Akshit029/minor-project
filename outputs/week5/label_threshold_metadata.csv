@@ -1,0 +1,5 @@
+district,lead_day,bust_quantile,error_threshold,training_sample_count,provenance
+Anantnag,1,0.9,8.037,8,district_lead_day
+Baramulla,1,0.9,8.347,8,district_lead_day
+Jammu,1,0.9,4.394,7,district_lead_day
+Srinagar,1,0.9,6.982,7,district_lead_day

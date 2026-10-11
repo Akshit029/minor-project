@@ -1,6 +1,6 @@
 # Spatiotemporal Reliability and Uncertainty Detection for Medium-Range Weather Forecasts
 ## Executive Summary & Scientific Verification Report (Weeks 1 & 2)
-**Generated:** 2026-09-27 19:05:55 UTC  
+**Generated:** 2026-10-11 22:27:54 UTC  
 **Target Domain:** Jammu & Kashmir (Lat 31.0°N–38.0°N, Lon 73.0°E–81.0°E)  
 **Districts Evaluated:** Anantnag, Baramulla, Jammu, Srinagar  
 

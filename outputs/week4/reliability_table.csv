@@ -1,0 +1,5 @@
+district,lead_day,variable,training_sample_count,training_MAE,error_tolerance_scale,confidence_factor_k,R_error,confidence_factor_C,reliability_score_R,provenance
+Anantnag,1,temperature_c,8,6.42,2.0,10.0,0.0404,0.4444,0.0179,district_lead_day
+Baramulla,1,temperature_c,8,6.52,2.0,10.0,0.0384,0.4444,0.0171,district_lead_day
+Jammu,1,temperature_c,7,3.004,2.0,10.0,0.2227,0.4118,0.0917,district_lead_day
+Srinagar,1,temperature_c,7,4.833,2.0,10.0,0.0892,0.4118,0.0367,district_lead_day

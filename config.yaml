@@ -62,3 +62,38 @@ output_dirs:
   figures: "outputs/figures"
   tables: "outputs/tables"
   reports: "outputs/reports"
+  week3: "outputs/week3"
+  week3_figures: "outputs/week3/figures"
+  week4: "outputs/week4"
+  week4_figures: "outputs/week4/figures"
+  week5: "outputs/week5"
+  week5_figures: "outputs/week5/figures"
+
+week3:
+  lead_days_range: [1, 10]
+  hours_per_lead_day: 24
+  min_samples_district: 3
+  min_samples_bias_correction: 4
+  bias_correction_train_split: 0.70
+  check_pressure: true
+  enable_precip_bias_correction: false
+
+week4:
+  error_scale:
+    temperature_c: 2.0   # °C acceptable tolerance (engineering default)
+    precipitation_mm: 5.0 # mm tolerance
+  variable_weights:
+    temperature_c: 1.0
+    precipitation_mm: 0.5
+  confidence_k: 10.0     # Sample confidence factor parameter k
+  min_evidence_samples: 3
+  temporal_split_ratio: 0.70
+
+week5:
+  bust_quantile: 0.90    # Upper 90th percentile of training absolute error
+  min_samples_threshold: 4
+  train_ratio: 0.70
+  val_ratio: 0.15
+  test_ratio: 0.15
+  random_seed: 42
+  classification_threshold: 0.50
