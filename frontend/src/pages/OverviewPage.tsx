@@ -3,7 +3,6 @@ import { WeatherApi, OverviewApiResponse } from '../services/api';
 import { Card } from '../components/common/Card';
 import { Badge } from '../components/common/Badge';
 import { MetricValue } from '../components/common/MetricValue';
-import { ScientificDisclaimer } from '../components/common/ScientificDisclaimer';
 import { Skeleton } from '../components/common/Skeleton';
 import { JKLeafletMap } from '../components/map/JKLeafletMap';
 import { ReliabilityTrendChart } from '../components/charts/ReliabilityTrendChart';
@@ -122,9 +121,6 @@ export const OverviewPage: React.FC = () => {
             </div>
           </div>
         </div>
-
-        {/* Scientific reference notice */}
-        <ScientificDisclaimer type="demo" />
       </div>
 
       {/* 5. KPI Cards (6 clean cards) */}

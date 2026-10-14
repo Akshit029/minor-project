@@ -3,7 +3,6 @@ import { WeatherApi, ModelPerformanceApiResponse } from '../services/api';
 import { Card } from '../components/common/Card';
 import { Badge } from '../components/common/Badge';
 import { MetricValue } from '../components/common/MetricValue';
-import { ScientificDisclaimer } from '../components/common/ScientificDisclaimer';
 import { ConfusionMatrix } from '../components/charts/ConfusionMatrix';
 import { PrecisionRecallChart } from '../components/charts/PrecisionRecallChart';
 import { FeatureImportanceChart } from '../components/charts/FeatureImportanceChart';
@@ -93,8 +92,6 @@ export const ModelPerformancePage: React.FC = () => {
             </button>
           </div>
         </div>
-
-        <ScientificDisclaimer type="demo" />
       </div>
 
       {/* Primary Classification Metric KPI Cards */}

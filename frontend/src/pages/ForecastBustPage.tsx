@@ -3,7 +3,6 @@ import { WeatherApi } from '../services/api';
 import { Card } from '../components/common/Card';
 import { Badge } from '../components/common/Badge';
 import { MetricValue } from '../components/common/MetricValue';
-import { ScientificDisclaimer } from '../components/common/ScientificDisclaimer';
 import type { 
   ForecastBustPredictionResult, 
   DistrictName, 
@@ -144,8 +143,6 @@ export const ForecastBustPage: React.FC = () => {
             Demo Data (Week 5 Prototype)
           </Badge>
         </div>
-
-        <ScientificDisclaimer type="demo" />
       </div>
 
       {/* Model Performance Overview Grid */}

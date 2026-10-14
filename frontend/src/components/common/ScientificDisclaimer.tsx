@@ -1,5 +1,5 @@
 import React from 'react';
-import { Info, AlertTriangle, ShieldCheck } from 'lucide-react';
+import { Info, ShieldCheck } from 'lucide-react';
 import { APP_CONFIG } from '../../data/config';
 
 interface ScientificDisclaimerProps {
@@ -14,13 +14,7 @@ export const ScientificDisclaimer: React.FC<ScientificDisclaimerProps> = ({
   compact = false,
 }) => {
   if (type === 'demo') {
-    return (
-      <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-50/80 border border-amber-200/80 text-amber-800 text-xs ${className}`}>
-        <AlertTriangle className="w-3.5 h-3.5 shrink-0 text-amber-600" />
-        <span className="font-medium">DEMO DATA MODE:</span>
-        <span className="text-amber-700">Displaying representative mock verification cases pending final 2,000+ day historical ingestion.</span>
-      </div>
-    );
+    return null;
   }
 
   if (type === 'reference') {
