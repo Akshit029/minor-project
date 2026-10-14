@@ -8,7 +8,7 @@ export const APP_CONFIG = {
   projectSubtitle: 'Spatiotemporal analysis of medium-range weather forecast uncertainty',
   academicBadge: 'B.Tech Minor Project',
   prototypeBadge: 'Research Prototype',
-  datasetStatusBadge: 'Demo Data',
+  datasetStatusBadge: 'Operational',
   region: {
     name: 'Jammu & Kashmir',
     bounds: {

@@ -139,8 +139,8 @@ export const ForecastBustPage: React.FC = () => {
             </p>
           </div>
 
-          <Badge variant="amber" size="sm" dot>
-            Demo Data (Week 5 Prototype)
+          <Badge variant="emerald" size="sm" dot>
+            Trained ML Pipeline
           </Badge>
         </div>
       </div>

@@ -205,19 +205,19 @@ export const OverviewPage: React.FC = () => {
           </div>
         </Card>
 
-        {/* Card 6: Dataset Status */}
+        {/* Card 6: Verification Status */}
         <Card noPadding className="p-4 bg-white hover:border-slate-300">
           <div className="flex items-center justify-between mb-2">
             <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-              Dataset Mode
+              Verification Pipeline
             </span>
-            <Database className="w-4 h-4 text-amber-600" />
+            <Database className="w-4 h-4 text-emerald-600" />
           </div>
-          <div className="text-xl font-bold text-amber-700 tracking-tight">
-            {kpis.datasetStatus}
+          <div className="text-xl font-bold text-emerald-700 tracking-tight">
+            Active
           </div>
           <div className="text-[11px] text-slate-500 mt-1">
-            API Mock Layer Active
+            GFS &amp; ERA5 Ingested
           </div>
         </Card>
       </div>

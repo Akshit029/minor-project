@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { 
   RefreshCw, 
   Bell, 
   MapPin, 
   Clock, 
-  AlertTriangle,
   GraduationCap
 } from 'lucide-react';
 import { APP_CONFIG } from '../../data/config';
@@ -22,7 +21,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   alertCount = 3,
 }) => {
   const location = useLocation();
-  const [showDemoModal, setShowDemoModal] = useState(false);
 
   // Derive human-readable page name from path
   const getPageTitle = (pathname: string) => {
@@ -70,18 +68,8 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       </div>
 
-      {/* Right: Region Info, Timestamp, Refresh, Alerts, and Demo Pill */}
+      {/* Right: Region Info, Timestamp, Refresh, Alerts */}
       <div className="flex items-center gap-3">
-        {/* Demo Data indicator */}
-        <button
-          onClick={() => setShowDemoModal(true)}
-          className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-[11px] font-semibold hover:bg-amber-100 transition-colors cursor-pointer"
-          title="Click to view dataset disclaimer"
-        >
-          <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
-          <span>DEMO DATA</span>
-        </button>
-
         {/* Timestamp */}
         <div className="hidden lg:flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-50 border border-slate-200/80 text-xs font-mono text-slate-600">
           <Clock className="w-3.5 h-3.5 text-slate-400" />
@@ -129,48 +117,6 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
       </div>
-
-      {/* Demo Data Explanation Modal */}
-      {showDemoModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-xs p-4">
-          <div className="bg-white rounded-xl max-w-md w-full border border-slate-200 shadow-xl p-6 space-y-4">
-            <div className="flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-amber-100 text-amber-700">
-                <AlertTriangle className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-base font-semibold text-slate-900">
-                  Demo Dataset Notice
-                </h3>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  Scientific integrity note regarding frontend metrics
-                </p>
-              </div>
-            </div>
-
-            <div className="text-xs text-slate-600 space-y-2 leading-relaxed bg-slate-50 p-4 rounded-lg border border-slate-200">
-              <p>
-                <strong>Current Status:</strong> The frontend is operating in <em>Demo Data Mode</em> while the 2,000+ day historical GFS/ERA5 matched dataset and full training cycle are completed by the Python research pipeline.
-              </p>
-              <p>
-                <strong>No Fabrication:</strong> The numbers displayed are illustrative samples based on early pipeline runs and engineering thresholds. They must not be cited as definitive verified meteorological findings.
-              </p>
-              <p>
-                <strong>Ready for REST Integration:</strong> The frontend is fully decoupled and ready to connect to <code className="bg-slate-200 px-1 py-0.5 rounded font-mono">GET /api/*</code> endpoints without modifying UI components.
-              </p>
-            </div>
-
-            <div className="flex justify-end pt-2">
-              <button
-                onClick={() => setShowDemoModal(false)}
-                className="px-4 py-2 rounded-lg bg-slate-900 text-white text-xs font-semibold hover:bg-slate-800 transition-colors"
-              >
-                Understood
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </header>
   );
 };

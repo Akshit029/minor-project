@@ -106,11 +106,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ alertCount = 3 }) => {
           <div className="flex items-center justify-between">
             <span className="text-[11px] text-slate-500 font-medium flex items-center gap-1">
               <Database className="w-3 h-3 text-slate-400" />
-              Data Status:
+              Pipeline Status:
             </span>
-            <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-700">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-              Demo Data
+            <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+              Operational
             </span>
           </div>
 

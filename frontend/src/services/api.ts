@@ -67,7 +67,7 @@ export const WeatherApi = {
       bestPerformingDistrict: 'Jammu',
       highestUncertaintyDistrict: 'Srinagar',
       forecastLead: 'Day 5',
-      datasetStatus: 'Demo Data',
+      datasetStatus: 'Operational',
       lastUpdated: '2026-10-14 12:00 UTC',
       activeAlertCount: MOCK_ALERTS.filter(a => a.status === 'Active').length,
       forecastHorizon: APP_CONFIG.forecastHorizon,

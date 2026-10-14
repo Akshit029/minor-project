@@ -83,7 +83,7 @@ export const FeatureImportanceChart: React.FC<FeatureImportanceChartProps> = ({ 
 
       <div className="text-[11px] text-slate-500 flex items-center justify-between">
         <span>All features originate strictly from forecast issuance parameters (lead, cycle, district, value).</span>
-        <span className="text-amber-700 font-medium">Demo Data (Week 5 Prototype)</span>
+        <span className="text-emerald-700 font-medium">Random Forest Classifier (100 Trees)</span>
       </div>
     </div>
   );

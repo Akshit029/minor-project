@@ -3,7 +3,7 @@ import { Info, ShieldCheck } from 'lucide-react';
 import { APP_CONFIG } from '../../data/config';
 
 interface ScientificDisclaimerProps {
-  type?: 'reliability' | 'reference' | 'demo' | 'accumulation';
+  type?: 'reliability' | 'reference' | 'accumulation';
   className?: string;
   compact?: boolean;
 }
@@ -13,9 +13,6 @@ export const ScientificDisclaimer: React.FC<ScientificDisclaimerProps> = ({
   className = '',
   compact = false,
 }) => {
-  if (type === 'demo') {
-    return null;
-  }
 
   if (type === 'reference') {
     return (
