@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import { MapContainer, TileLayer, GeoJSON, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
-import { JK_REGION_GEOJSON } from '../../data/geojsonJK';
+import { JK_REGION_GEOJSON, JK_STUDY_BOUNDS } from '../../data/geojsonJK';
 import { APP_CONFIG } from '../../data/config';
 import type { DistrictInfo, DistrictName } from '../../types/weather';
 import { Badge } from '../common/Badge';
-import { MetricValue } from '../common/MetricValue';
-import { Thermometer, CloudRain, ShieldAlert, Compass } from 'lucide-react';
+import { Thermometer, CloudRain, ShieldAlert, Compass, Maximize2, MapPin } from 'lucide-react';
 
 interface JKLeafletMapProps {
   districts: DistrictInfo[];
   selectedDistrict?: DistrictName | null;
-  onSelectDistrict?: (name: DistrictName) => void;
+  onSelectDistrict?: (name: DistrictName | null) => void;
   leadDay?: number;
 }
 
@@ -62,10 +61,10 @@ const createCustomMarker = (district: DistrictInfo, isSelected: boolean) => {
     html: `
       <div style="position: relative; display: flex; flex-direction: column; align-items: center; cursor: pointer;">
         <div style="
-          width: ${isSelected ? '36px' : '30px'};
-          height: ${isSelected ? '36px' : '30px'};
+          width: ${isSelected ? '38px' : '32px'};
+          height: ${isSelected ? '38px' : '32px'};
           background-color: ${state.color};
-          border: 2px solid #ffffff;
+          border: 2.5px solid #ffffff;
           border-radius: 9999px;
           display: flex;
           align-items: center;
@@ -74,47 +73,67 @@ const createCustomMarker = (district: DistrictInfo, isSelected: boolean) => {
           font-family: ui-monospace, monospace;
           font-size: 11px;
           font-weight: 700;
-          box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.3);
           transition: transform 0.2s ease;
-          ${isSelected ? 'transform: scale(1.15); box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.25);' : ''}
+          ${isSelected ? 'transform: scale(1.15); box-shadow: 0 0 0 5px rgba(15, 23, 42, 0.35);' : ''}
         ">
           ${district.name.substring(0, 1)}
         </div>
         <div style="
-          background: rgba(15, 23, 42, 0.90);
+          background: rgba(15, 23, 42, 0.92);
           color: white;
-          padding: 2px 6px;
-          border-radius: 4px;
+          padding: 2.5px 7px;
+          border-radius: 5px;
           font-size: 10px;
           font-weight: 600;
           margin-top: 3px;
           white-space: nowrap;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+          box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+          display: flex;
+          align-items: center;
+          gap: 3px;
         ">
-          ${district.name}
+          <span>${district.name}</span>
+          <span style="opacity: 0.65; font-size: 9px; font-family: monospace;">(${district.elevationMeters}m)</span>
         </div>
       </div>
     `,
-    iconSize: [40, 50],
-    iconAnchor: [20, 25],
-    popupAnchor: [0, -25],
+    iconSize: [60, 52],
+    iconAnchor: [30, 26],
+    popupAnchor: [0, -26],
   });
 };
 
-// Sub-component to center map when selected district changes
-const MapViewSync: React.FC<{ selectedDistrict?: DistrictName | null; districts: DistrictInfo[] }> = ({
-  selectedDistrict,
-  districts,
-}) => {
+// Sub-component to manage map bounds and centering
+const MapViewSync: React.FC<{
+  selectedDistrict?: DistrictName | null;
+  districts: DistrictInfo[];
+  resetTrigger: number;
+}> = ({ selectedDistrict, districts, resetTrigger }) => {
   const map = useMap();
+
+  // Fit all 4 study districts (from Jammu in the south to Baramulla in the north)
+  React.useEffect(() => {
+    map.fitBounds(JK_STUDY_BOUNDS, { padding: [35, 35] });
+  }, [map]);
+
+  // Respond to explicit reset trigger
+  React.useEffect(() => {
+    if (resetTrigger > 0) {
+      map.fitBounds(JK_STUDY_BOUNDS, { padding: [35, 35], duration: 1.0 });
+    }
+  }, [resetTrigger, map]);
+
+  // When a district is selected, smoothly fly to it at an informative zoom level (8.5)
   React.useEffect(() => {
     if (selectedDistrict) {
       const d = districts.find(item => item.name === selectedDistrict);
       if (d) {
-        map.flyTo([d.lat, d.lon], 9, { duration: 1.2 });
+        map.flyTo([d.lat, d.lon], 8.5, { duration: 1.0 });
       }
     }
   }, [selectedDistrict, districts, map]);
+
   return null;
 };
 
@@ -125,6 +144,12 @@ export const JKLeafletMap: React.FC<JKLeafletMapProps> = ({
   leadDay = 5,
 }) => {
   const [hoveredDistrict, setHoveredDistrict] = useState<DistrictName | null>(null);
+  const [resetTrigger, setResetTrigger] = useState(0);
+
+  const handleResetView = () => {
+    if (onSelectDistrict) onSelectDistrict(null);
+    setResetTrigger(prev => prev + 1);
+  };
 
   // GeoJSON style handler
   const geoJsonStyle = (feature: any) => {
@@ -133,10 +158,10 @@ export const JKLeafletMap: React.FC<JKLeafletMapProps> = ({
       return {
         fillColor: '#64748b',
         weight: 1.5,
-        opacity: 0.8,
+        opacity: 0.85,
         color: '#475569',
         dashArray: '4, 4',
-        fillOpacity: 0.04,
+        fillOpacity: 0.05,
       };
     }
 
@@ -171,21 +196,59 @@ export const JKLeafletMap: React.FC<JKLeafletMapProps> = ({
   };
 
   return (
-    <div className="relative w-full h-[460px] rounded-xl overflow-hidden border border-slate-200/90 shadow-xs bg-slate-100">
-      {/* Map Header Floating Overlay */}
-      <div className="absolute top-3 left-3 z-[1000] bg-white/95 backdrop-blur-xs px-3.5 py-2 rounded-lg border border-slate-200/90 shadow-sm flex items-center gap-3">
-        <Compass className="w-4 h-4 text-slate-700" />
-        <div>
-          <div className="text-xs font-bold text-slate-900 leading-none">
-            Jammu &amp; Kashmir Study Grid
+    <div className="relative w-full h-[520px] rounded-xl overflow-hidden border border-slate-200/90 shadow-xs bg-slate-100">
+      {/* Top Floating Control Bar */}
+      <div className="absolute top-3 left-3 right-3 z-[1000] flex flex-wrap items-center justify-between gap-2 pointer-events-none">
+        {/* Left Badge: Grid Extent */}
+        <div className="bg-white/95 backdrop-blur-xs px-3.5 py-2 rounded-lg border border-slate-200/90 shadow-sm flex items-center gap-2.5 pointer-events-auto">
+          <Compass className="w-4 h-4 text-slate-700 shrink-0" />
+          <div>
+            <div className="text-xs font-bold text-slate-900 leading-none flex items-center gap-2">
+              <span>Jammu &amp; Kashmir Study Grid</span>
+              <span className="text-[10px] font-mono text-indigo-700 bg-indigo-50 px-1.5 py-0.2 rounded font-semibold">
+                Lead Day {leadDay}
+              </span>
+            </div>
+            <div className="text-[10px] text-slate-500 mt-0.5">
+              South: Jammu (32.7°N) • North: Baramulla (34.2°N)
+            </div>
           </div>
-          <div className="text-[10px] text-slate-500 mt-0.5">
-            4 representative validation districts • Lead Day {leadDay}
-          </div>
+        </div>
+
+        {/* Right Controls: Quick District Focus & Reset Extent */}
+        <div className="bg-white/95 backdrop-blur-xs p-1.5 rounded-lg border border-slate-200/90 shadow-sm flex items-center gap-1.5 pointer-events-auto text-xs">
+          <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider pl-1 hidden sm:inline">
+            Focus:
+          </span>
+          {APP_CONFIG.studyDistricts.map((dName) => {
+            const isSel = selectedDistrict === dName;
+            return (
+              <button
+                key={dName}
+                onClick={() => onSelectDistrict && onSelectDistrict(dName)}
+                className={`px-2 py-1 rounded text-[11px] font-semibold transition-all cursor-pointer ${
+                  isSel
+                    ? 'bg-slate-900 text-white shadow-2xs'
+                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }`}
+              >
+                {dName}
+              </button>
+            );
+          })}
+
+          <button
+            onClick={handleResetView}
+            className="px-2 py-1 rounded bg-indigo-50 border border-indigo-200 text-indigo-700 text-[11px] font-semibold hover:bg-indigo-100 transition-colors flex items-center gap-1 cursor-pointer ml-1"
+            title="Reset map view to fit all J&K districts including Jammu"
+          >
+            <Maximize2 className="w-3 h-3" />
+            <span>Fit All</span>
+          </button>
         </div>
       </div>
 
-      {/* Map Legend Overlay */}
+      {/* Map Legend Floating Overlay */}
       <div className="absolute bottom-3 right-3 z-[1000] bg-white/95 backdrop-blur-xs px-3 py-2 rounded-lg border border-slate-200/90 shadow-sm text-[11px] space-y-1.5">
         <div className="font-semibold text-slate-800 text-[10px] uppercase tracking-wider mb-1">
           Empirical Reliability
@@ -211,18 +274,22 @@ export const JKLeafletMap: React.FC<JKLeafletMapProps> = ({
       <MapContainer
         center={APP_CONFIG.region.center}
         zoom={APP_CONFIG.region.defaultZoom}
-        scrollWheelZoom={false}
+        scrollWheelZoom={true}
         className="w-full h-full"
       >
-        {/* Crisp CartoDB Positron / OSM Light TileLayer */}
+        {/* OpenStreetMap Standard Public TileLayer (100% Free, No API Key Required) */}
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-          maxZoom={14}
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          maxZoom={18}
         />
 
-        {/* Sync Center on Selection */}
-        <MapViewSync selectedDistrict={selectedDistrict} districts={districts} />
+        {/* Sync Center on Selection or Reset to show all 4 study districts */}
+        <MapViewSync 
+          selectedDistrict={selectedDistrict} 
+          districts={districts}
+          resetTrigger={resetTrigger}
+        />
 
         {/* J&K Regional & District GeoJSON */}
         <GeoJSON

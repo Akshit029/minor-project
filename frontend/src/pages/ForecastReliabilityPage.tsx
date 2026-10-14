@@ -24,7 +24,7 @@ export const ForecastReliabilityPage: React.FC = () => {
   const [leadDayMetrics, setLeadDayMetrics] = useState<LeadDayMetrics[]>([]);
   const [districts, setDistricts] = useState<DistrictInfo[]>([]);
   const [selectedLeadDay, setSelectedLeadDay] = useState<number>(5);
-  const [selectedDistrict, setSelectedDistrict] = useState<DistrictName | null>('Srinagar');
+  const [selectedDistrict, setSelectedDistrict] = useState<DistrictName | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

@@ -1,6 +1,15 @@
 import type { FeatureCollection } from 'geojson';
 
 /**
+ * Coordinate bounding box specifically encompassing the 4 representative study districts
+ * from Jammu in the south (32.72°N) to Baramulla in the north (34.21°N).
+ */
+export const JK_STUDY_BOUNDS: [[number, number], [number, number]] = [
+  [32.35, 73.95], // South-West corner (South of Jammu City / Samba plain)
+  [34.55, 75.45], // North-East corner (North of Baramulla & East of Anantnag)
+];
+
+/**
  * GeoJSON polygon representing the Jammu & Kashmir study region
  * Coordinate order: [longitude, latitude] as per GeoJSON specification (RFC 7946).
  */
@@ -13,73 +22,81 @@ export const JK_REGION_GEOJSON: FeatureCollection = {
       properties: {
         name: 'Jammu & Kashmir Region',
         type: 'Regional Study Extent',
-        bounding_box: '31.0°N–38.0°N, 73.0°E–81.0°E'
+        bounding_box: '32.2°N–34.8°N, 73.8°E–75.8°E'
       },
       geometry: {
         type: 'Polygon',
         coordinates: [
           [
-            [73.8, 32.5],
-            [74.2, 32.2],
-            [74.9, 32.4],
-            [75.8, 32.3],
-            [76.5, 32.7],
-            [77.2, 33.2],
-            [77.9, 33.8],
-            [78.4, 34.5],
-            [77.8, 35.2],
-            [76.8, 35.8],
-            [75.5, 36.1],
-            [74.5, 35.6],
-            [73.9, 34.8],
-            [73.6, 34.2],
-            [73.7, 33.3],
-            [73.8, 32.5]
+            // South: Jammu / Kathua / Samba outer plains
+            [74.60, 32.40],
+            [75.05, 32.35],
+            [75.40, 32.45],
+            [75.65, 32.70],
+            // South-East: Udhampur / Doda / Kishtwar foothills
+            [75.55, 33.15],
+            [75.45, 33.55],
+            // East: Anantnag / Lidder / Greater Himalaya slope
+            [75.35, 33.90],
+            [75.25, 34.20],
+            [74.95, 34.45],
+            // North: Bandipora / Baramulla / Kupwara heights
+            [74.60, 34.55],
+            [74.20, 34.45],
+            [73.95, 34.25],
+            // West: Line of Control / Uri / Poonch / Rajouri
+            [74.05, 33.80],
+            [74.20, 33.40],
+            [74.35, 33.00],
+            [74.50, 32.65],
+            [74.60, 32.40]
           ]
         ]
       }
     },
-    // Approximate territorial polygons for the 4 study districts to give rich spatial map overlay
-    {
-      type: 'Feature',
-      id: 'Srinagar',
-      properties: {
-        name: 'Srinagar',
-        role: 'Summer Capital & Kashmir Central Valley',
-        elevation: '1585m'
-      },
-      geometry: {
-        type: 'Polygon',
-        coordinates: [
-          [
-            [74.70, 34.00],
-            [74.90, 34.02],
-            [74.94, 34.14],
-            [74.82, 34.18],
-            [74.72, 34.11],
-            [74.70, 34.00]
-          ]
-        ]
-      }
-    },
+    // Distinct study district polygons
     {
       type: 'Feature',
       id: 'Jammu',
       properties: {
         name: 'Jammu',
-        role: 'Winter Capital & Shivalik Plains',
+        division: 'Jammu Division',
+        role: 'Winter Capital & Shivalik Outer Plains',
         elevation: '327m'
       },
       geometry: {
         type: 'Polygon',
         coordinates: [
           [
-            [74.72, 32.65],
-            [74.96, 32.62],
-            [75.05, 32.78],
-            [74.88, 32.85],
-            [74.75, 32.76],
-            [74.72, 32.65]
+            [74.68, 32.60],
+            [75.02, 32.58],
+            [75.12, 32.82],
+            [74.90, 32.90],
+            [74.72, 32.80],
+            [74.68, 32.60]
+          ]
+        ]
+      }
+    },
+    {
+      type: 'Feature',
+      id: 'Srinagar',
+      properties: {
+        name: 'Srinagar',
+        division: 'Kashmir Valley Division',
+        role: 'Summer Capital & Central Kashmir Valley',
+        elevation: '1585m'
+      },
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [74.68, 33.98],
+            [74.92, 34.00],
+            [74.96, 34.16],
+            [74.80, 34.20],
+            [74.70, 34.12],
+            [74.68, 33.98]
           ]
         ]
       }
@@ -89,19 +106,20 @@ export const JK_REGION_GEOJSON: FeatureCollection = {
       id: 'Anantnag',
       properties: {
         name: 'Anantnag',
-        role: 'South Kashmir & Lidder Basin',
+        division: 'Kashmir Valley Division',
+        role: 'South Kashmir & Lidder Basin / Pir Panjal',
         elevation: '1600m'
       },
       geometry: {
         type: 'Polygon',
         coordinates: [
           [
-            [75.04, 33.65],
-            [75.28, 33.62],
-            [75.35, 33.82],
-            [75.18, 33.86],
-            [75.06, 33.74],
-            [75.04, 33.65]
+            [75.00, 33.60],
+            [75.32, 33.58],
+            [75.38, 33.85],
+            [75.16, 33.88],
+            [75.02, 33.72],
+            [75.00, 33.60]
           ]
         ]
       }
@@ -111,19 +129,20 @@ export const JK_REGION_GEOJSON: FeatureCollection = {
       id: 'Baramulla',
       properties: {
         name: 'Baramulla',
-        role: 'North Kashmir & Jhelum Gorge',
+        division: 'Kashmir Valley Division',
+        role: 'North Kashmir & Jhelum Valley Gorge',
         elevation: '1593m'
       },
       geometry: {
         type: 'Polygon',
         coordinates: [
           [
-            [74.22, 34.12],
-            [74.45, 34.14],
-            [74.50, 34.32],
-            [74.28, 34.35],
-            [74.18, 34.22],
-            [74.22, 34.12]
+            [74.18, 34.10],
+            [74.48, 34.12],
+            [74.54, 34.34],
+            [74.26, 34.38],
+            [74.14, 34.22],
+            [74.18, 34.10]
           ]
         ]
       }

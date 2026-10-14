@@ -29,7 +29,7 @@ import { Link } from 'react-router-dom';
 export const OverviewPage: React.FC = () => {
   const [data, setData] = useState<OverviewApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
-  const [selectedDistrict, setSelectedDistrict] = useState<DistrictName | null>('Srinagar');
+  const [selectedDistrict, setSelectedDistrict] = useState<DistrictName | null>(null);
   const [activeAlertModal, setActiveAlertModal] = useState<AlertItem | null>(null);
 
   useEffect(() => {
