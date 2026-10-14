@@ -72,12 +72,12 @@ export const OverviewPage: React.FC = () => {
   return (
     <div className="space-y-6 font-sans">
       {/* 4. Overview Header */}
-      <div className="bg-white rounded-xl border border-slate-200/90 shadow-2xs p-6 space-y-4">
+      <div className="bg-white rounded-xl border border-slate-200/90 shadow-2xs p-4 sm:p-6 space-y-4">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div>
-            <div className="flex flex-wrap items-center gap-2 mb-1.5">
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-1.5">
               <Badge variant="slate" size="xs">
-                Jammu &amp; Kashmir Domain
+                J&amp;K UT Domain
               </Badge>
               <Badge variant="blue" size="xs">
                 {kpis.forecastHorizon}
@@ -86,7 +86,7 @@ export const OverviewPage: React.FC = () => {
                 Research Prototype
               </Badge>
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+            <h1 className="text-lg sm:text-2xl font-bold text-slate-900 tracking-tight">
               Jammu &amp; Kashmir Forecast Reliability
             </h1>
             <p className="text-xs sm:text-sm text-slate-500 mt-1 font-normal max-w-3xl leading-relaxed">
@@ -95,7 +95,7 @@ export const OverviewPage: React.FC = () => {
           </div>
 
           {/* Quick Context Stats */}
-          <div className="flex flex-wrap items-center gap-4 text-xs text-slate-600 bg-slate-50/80 px-4 py-2.5 rounded-xl border border-slate-200/80">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs text-slate-600 bg-slate-50/80 p-3 sm:px-4 sm:py-2.5 rounded-xl border border-slate-200/80">
             <div>
               <span className="text-[10px] text-slate-400 font-medium block uppercase tracking-wider">
                 Study Districts
@@ -109,7 +109,7 @@ export const OverviewPage: React.FC = () => {
               </span>
               <span className="font-semibold text-emerald-700 flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                Available (GFS + ERA5)
+                Operational
               </span>
             </div>
             <div className="w-px h-6 bg-slate-200" />
@@ -117,106 +117,106 @@ export const OverviewPage: React.FC = () => {
               <span className="text-[10px] text-slate-400 font-medium block uppercase tracking-wider">
                 Updated
               </span>
-              <span className="font-mono text-slate-700">{kpis.lastUpdated}</span>
+              <span className="font-mono text-slate-700 text-[11px] sm:text-xs">{kpis.lastUpdated}</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* 5. KPI Cards (6 clean cards) */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
         {/* Card 1: Overall Reliability */}
-        <Card noPadding className="p-4 bg-white hover:border-slate-300">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+        <Card noPadding className="p-3 sm:p-4 bg-white hover:border-slate-300">
+          <div className="flex items-center justify-between mb-1.5">
+            <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500 uppercase tracking-wider truncate">
               Overall Reliability
             </span>
-            <Activity className="w-4 h-4 text-emerald-600" />
+            <Activity className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600 shrink-0" />
           </div>
-          <div className="text-2xl font-bold font-mono text-emerald-700 tracking-tight">
+          <div className="text-xl sm:text-2xl font-bold font-mono text-emerald-700 tracking-tight">
             {kpis.overallReliability.toFixed(2)}
           </div>
-          <div className="text-[11px] text-slate-500 mt-1 leading-tight">
+          <div className="text-[10px] sm:text-[11px] text-slate-500 mt-1 leading-tight line-clamp-1 sm:line-clamp-none">
             {kpis.overallReliabilityLabel}
           </div>
         </Card>
 
         {/* Card 2: Forecast Bust Risk */}
-        <Card noPadding className="p-4 bg-white hover:border-slate-300">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+        <Card noPadding className="p-3 sm:p-4 bg-white hover:border-slate-300">
+          <div className="flex items-center justify-between mb-1.5">
+            <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500 uppercase tracking-wider truncate">
               Bust Risk
             </span>
-            <AlertTriangle className="w-4 h-4 text-amber-500" />
+            <AlertTriangle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-500 shrink-0" />
           </div>
-          <div className="text-2xl font-bold font-mono text-amber-700 tracking-tight">
+          <div className="text-xl sm:text-2xl font-bold font-mono text-amber-700 tracking-tight">
             {kpis.forecastBustRisk}%
           </div>
-          <div className="text-[11px] text-slate-500 mt-1 leading-tight">
+          <div className="text-[10px] sm:text-[11px] text-slate-500 mt-1 leading-tight line-clamp-1 sm:line-clamp-none">
             {kpis.forecastBustRiskLabel}
           </div>
         </Card>
 
         {/* Card 3: Best Performing District */}
-        <Card noPadding className="p-4 bg-white hover:border-slate-300">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+        <Card noPadding className="p-3 sm:p-4 bg-white hover:border-slate-300">
+          <div className="flex items-center justify-between mb-1.5">
+            <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500 uppercase tracking-wider truncate">
               Best District
             </span>
-            <Award className="w-4 h-4 text-sky-600" />
+            <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-sky-600 shrink-0" />
           </div>
-          <div className="text-xl font-bold text-slate-900 tracking-tight">
+          <div className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight truncate">
             {kpis.bestPerformingDistrict}
           </div>
-          <div className="text-[11px] text-emerald-600 font-medium mt-1">
-            Lowest historical MAE
+          <div className="text-[10px] sm:text-[11px] text-emerald-600 font-medium mt-1 truncate">
+            Lowest hist. MAE
           </div>
         </Card>
 
         {/* Card 4: Highest Uncertainty */}
-        <Card noPadding className="p-4 bg-white hover:border-slate-300">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+        <Card noPadding className="p-3 sm:p-4 bg-white hover:border-slate-300">
+          <div className="flex items-center justify-between mb-1.5">
+            <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500 uppercase tracking-wider truncate">
               High Uncertainty
             </span>
-            <TrendingDown className="w-4 h-4 text-rose-500" />
+            <TrendingDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-rose-500 shrink-0" />
           </div>
-          <div className="text-xl font-bold text-slate-900 tracking-tight">
+          <div className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight truncate">
             {kpis.highestUncertaintyDistrict}
           </div>
-          <div className="text-[11px] text-rose-600 font-medium mt-1">
-            Elevated valley variance
+          <div className="text-[10px] sm:text-[11px] text-rose-600 font-medium mt-1 truncate">
+            Elevated variance
           </div>
         </Card>
 
         {/* Card 5: Forecast Lead */}
-        <Card noPadding className="p-4 bg-white hover:border-slate-300">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+        <Card noPadding className="p-3 sm:p-4 bg-white hover:border-slate-300">
+          <div className="flex items-center justify-between mb-1.5">
+            <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500 uppercase tracking-wider truncate">
               Forecast Lead
             </span>
-            <Calendar className="w-4 h-4 text-indigo-500" />
+            <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-500 shrink-0" />
           </div>
-          <div className="text-xl font-bold font-mono text-slate-900 tracking-tight">
+          <div className="text-lg sm:text-xl font-bold font-mono text-slate-900 tracking-tight">
             {kpis.forecastLead}
           </div>
-          <div className="text-[11px] text-slate-500 mt-1">
+          <div className="text-[10px] sm:text-[11px] text-slate-500 mt-1">
             120h Lookahead
           </div>
         </Card>
 
         {/* Card 6: Verification Status */}
-        <Card noPadding className="p-4 bg-white hover:border-slate-300">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+        <Card noPadding className="p-3 sm:p-4 bg-white hover:border-slate-300">
+          <div className="flex items-center justify-between mb-1.5">
+            <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500 uppercase tracking-wider truncate">
               Verification Pipeline
             </span>
-            <Database className="w-4 h-4 text-emerald-600" />
+            <Database className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600 shrink-0" />
           </div>
-          <div className="text-xl font-bold text-emerald-700 tracking-tight">
+          <div className="text-lg sm:text-xl font-bold text-emerald-700 tracking-tight">
             Active
           </div>
-          <div className="text-[11px] text-slate-500 mt-1">
+          <div className="text-[10px] sm:text-[11px] text-slate-500 mt-1 truncate">
             GFS &amp; ERA5 Ingested
           </div>
         </Card>

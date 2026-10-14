@@ -28,31 +28,31 @@ export const ConfusionMatrix: React.FC<ConfusionMatrixProps> = ({ matrix, modelN
 
       <div className="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-2xs">
         {/* Header grid */}
-        <div className="grid grid-cols-3 bg-slate-50 border-b border-slate-200 text-center text-xs font-semibold text-slate-700 py-2.5">
-          <div className="text-left pl-4 text-slate-400 font-medium">Actual / Predicted</div>
-          <div>Predicted Normal</div>
-          <div>Predicted Bust</div>
+        <div className="grid grid-cols-3 bg-slate-50 border-b border-slate-200 text-center text-[10px] sm:text-xs font-semibold text-slate-700 py-2 sm:py-2.5">
+          <div className="text-left pl-2 sm:pl-4 text-slate-400 font-medium">Actual / Pred</div>
+          <div>Pred Normal</div>
+          <div>Pred Bust</div>
         </div>
 
         {/* Row 1: Actual Normal */}
         <div className="grid grid-cols-3 border-b border-slate-100 items-stretch">
-          <div className="p-3 bg-slate-50/70 border-r border-slate-200 text-xs font-semibold text-slate-700 flex flex-col justify-center">
+          <div className="p-2 sm:p-3 bg-slate-50/70 border-r border-slate-200 text-[11px] sm:text-xs font-semibold text-slate-700 flex flex-col justify-center">
             <span>Actual Normal</span>
-            <span className="text-[10px] text-slate-400 font-normal">Non-bust cases</span>
+            <span className="text-[9px] sm:text-[10px] text-slate-400 font-normal hidden xs:inline">Non-bust cases</span>
           </div>
 
           {/* True Negative */}
-          <div className="p-4 bg-emerald-50/50 border-r border-slate-100 text-center flex flex-col items-center justify-center">
-            <span className="text-xl font-bold font-mono text-emerald-800">{tn}</span>
-            <span className="text-[10px] font-semibold text-emerald-700 uppercase tracking-wider mt-0.5">
-              True Negative ({tnPct}%)
+          <div className="p-2 sm:p-4 bg-emerald-50/50 border-r border-slate-100 text-center flex flex-col items-center justify-center">
+            <span className="text-base sm:text-xl font-bold font-mono text-emerald-800">{tn}</span>
+            <span className="text-[8px] sm:text-[10px] font-semibold text-emerald-700 uppercase tracking-wider mt-0.5">
+              True Neg ({tnPct}%)
             </span>
           </div>
 
           {/* False Positive */}
-          <div className="p-4 bg-amber-50/40 text-center flex flex-col items-center justify-center">
-            <span className="text-xl font-bold font-mono text-amber-800">{fp}</span>
-            <span className="text-[10px] font-semibold text-amber-700 uppercase tracking-wider mt-0.5">
+          <div className="p-2 sm:p-4 bg-amber-50/40 text-center flex flex-col items-center justify-center">
+            <span className="text-base sm:text-xl font-bold font-mono text-amber-800">{fp}</span>
+            <span className="text-[8px] sm:text-[10px] font-semibold text-amber-700 uppercase tracking-wider mt-0.5">
               False Alarm ({fpPct}%)
             </span>
           </div>
@@ -60,24 +60,24 @@ export const ConfusionMatrix: React.FC<ConfusionMatrixProps> = ({ matrix, modelN
 
         {/* Row 2: Actual Bust */}
         <div className="grid grid-cols-3 items-stretch">
-          <div className="p-3 bg-slate-50/70 border-r border-slate-200 text-xs font-semibold text-slate-700 flex flex-col justify-center">
+          <div className="p-2 sm:p-3 bg-slate-50/70 border-r border-slate-200 text-[11px] sm:text-xs font-semibold text-slate-700 flex flex-col justify-center">
             <span>Actual Bust</span>
-            <span className="text-[10px] text-slate-400 font-normal">Upper 90th percentile</span>
+            <span className="text-[9px] sm:text-[10px] text-slate-400 font-normal hidden xs:inline">&gt;90th %ile</span>
           </div>
 
           {/* False Negative */}
-          <div className="p-4 bg-rose-50/40 border-r border-slate-100 text-center flex flex-col items-center justify-center">
-            <span className="text-xl font-bold font-mono text-rose-800">{fn}</span>
-            <span className="text-[10px] font-semibold text-rose-700 uppercase tracking-wider mt-0.5">
+          <div className="p-2 sm:p-4 bg-rose-50/40 border-r border-slate-100 text-center flex flex-col items-center justify-center">
+            <span className="text-base sm:text-xl font-bold font-mono text-rose-800">{fn}</span>
+            <span className="text-[8px] sm:text-[10px] font-semibold text-rose-700 uppercase tracking-wider mt-0.5">
               Missed Bust ({fnPct}%)
             </span>
           </div>
 
           {/* True Positive */}
-          <div className="p-4 bg-emerald-50/80 text-center flex flex-col items-center justify-center">
-            <span className="text-xl font-bold font-mono text-emerald-900">{tp}</span>
-            <span className="text-[10px] font-semibold text-emerald-700 uppercase tracking-wider mt-0.5">
-              Detected Bust ({tpPct}%)
+          <div className="p-2 sm:p-4 bg-emerald-50/80 text-center flex flex-col items-center justify-center">
+            <span className="text-base sm:text-xl font-bold font-mono text-emerald-900">{tp}</span>
+            <span className="text-[8px] sm:text-[10px] font-semibold text-emerald-700 uppercase tracking-wider mt-0.5">
+              Detected ({tpPct}%)
             </span>
           </div>
         </div>

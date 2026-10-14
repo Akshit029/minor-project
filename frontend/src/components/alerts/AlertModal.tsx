@@ -14,38 +14,38 @@ export const AlertModal: React.FC<AlertModalProps> = ({ alert, onClose }) => {
   if (!alert) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-xs p-4 font-sans">
-      <div className="bg-white rounded-2xl max-w-lg w-full border border-slate-200 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-xs p-3 sm:p-4 font-sans">
+      <div className="bg-white rounded-2xl max-w-lg w-full border border-slate-200 shadow-2xl overflow-hidden max-h-[92vh] flex flex-col animate-in fade-in zoom-in-95 duration-150">
         {/* Header */}
-        <div className="p-5 border-b border-slate-100 flex items-start justify-between bg-slate-50/70">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-rose-100 text-rose-700">
-              <AlertTriangle className="w-5 h-5" />
+        <div className="p-4 sm:p-5 border-b border-slate-100 flex items-start justify-between bg-slate-50/70 shrink-0">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+            <div className="p-2 sm:p-2.5 rounded-xl bg-rose-100 text-rose-700 shrink-0">
+              <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
+            <div className="min-w-0">
               <div className="flex items-center gap-2">
                 <Badge variant={alert.severity === 'critical' || alert.severity === 'high' ? 'rose' : 'amber'} size="xs" dot>
                   {alert.alertType.replace(/_/g, ' ').toUpperCase()}
                 </Badge>
                 <span className="text-xs text-slate-400 font-mono">ID: {alert.id}</span>
               </div>
-              <h3 className="text-base font-bold text-slate-900 mt-1">
+              <h3 className="text-sm sm:text-base font-bold text-slate-900 mt-1 truncate sm:whitespace-normal">
                 {alert.title}
               </h3>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors cursor-pointer"
+            className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors cursor-pointer shrink-0 ml-2"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Content Body */}
-        <div className="p-6 space-y-4 text-xs">
+        <div className="p-4 sm:p-6 space-y-4 text-xs overflow-y-auto flex-1">
           {/* Diagnostic Key Values */}
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 gap-2 sm:gap-3">
             <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/70">
               <span className="text-[10px] text-slate-400 uppercase font-semibold tracking-wider">
                 Target District

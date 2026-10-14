@@ -145,6 +145,7 @@ export const JKLeafletMap: React.FC<JKLeafletMapProps> = ({
 }) => {
   const [hoveredDistrict, setHoveredDistrict] = useState<DistrictName | null>(null);
   const [resetTrigger, setResetTrigger] = useState(0);
+  const [isLegendOpen, setIsLegendOpen] = useState(false);
 
   const handleResetView = () => {
     if (onSelectDistrict) onSelectDistrict(null);
@@ -196,28 +197,29 @@ export const JKLeafletMap: React.FC<JKLeafletMapProps> = ({
   };
 
   return (
-    <div className="relative w-full h-[520px] rounded-xl overflow-hidden border border-slate-200/90 shadow-xs bg-slate-100">
+    <div className="relative w-full h-[350px] sm:h-[440px] md:h-[520px] rounded-xl overflow-hidden border border-slate-200/90 shadow-xs bg-slate-100">
       {/* Top Floating Control Bar */}
-      <div className="absolute top-3 left-3 right-3 z-[1000] flex flex-wrap items-center justify-between gap-2 pointer-events-none">
+      <div className="absolute top-2 sm:top-3 left-2 sm:left-3 right-2 sm:right-3 z-[1000] flex flex-wrap items-center justify-between gap-1.5 sm:gap-2 pointer-events-none">
         {/* Left Badge: Grid Extent */}
-        <div className="bg-white/95 backdrop-blur-xs px-3.5 py-2 rounded-lg border border-slate-200/90 shadow-sm flex items-center gap-2.5 pointer-events-auto">
-          <Compass className="w-4 h-4 text-slate-700 shrink-0" />
+        <div className="bg-white/95 backdrop-blur-xs px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg border border-slate-200/90 shadow-sm flex items-center gap-2 pointer-events-auto">
+          <Compass className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-700 shrink-0" />
           <div>
-            <div className="text-xs font-bold text-slate-900 leading-none flex items-center gap-2">
-              <span>Jammu &amp; Kashmir Study Grid</span>
-              <span className="text-[10px] font-mono text-indigo-700 bg-indigo-50 px-1.5 py-0.2 rounded font-semibold">
-                Lead Day {leadDay}
+            <div className="text-[11px] sm:text-xs font-bold text-slate-900 leading-none flex items-center gap-1.5 sm:gap-2">
+              <span className="hidden xs:inline">J&amp;K Study Grid</span>
+              <span className="xs:hidden">J&amp;K Grid</span>
+              <span className="text-[9px] sm:text-[10px] font-mono text-indigo-700 bg-indigo-50 px-1.5 py-0.2 rounded font-semibold">
+                Day {leadDay}
               </span>
             </div>
-            <div className="text-[10px] text-slate-500 mt-0.5">
+            <div className="text-[9px] sm:text-[10px] text-slate-500 mt-0.5 hidden sm:block">
               South: Jammu (32.7°N) • North: Baramulla (34.2°N)
             </div>
           </div>
         </div>
 
         {/* Right Controls: Quick District Focus & Reset Extent */}
-        <div className="bg-white/95 backdrop-blur-xs p-1.5 rounded-lg border border-slate-200/90 shadow-sm flex items-center gap-1.5 pointer-events-auto text-xs">
-          <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider pl-1 hidden sm:inline">
+        <div className="bg-white/95 backdrop-blur-xs p-1 sm:p-1.5 rounded-lg border border-slate-200/90 shadow-sm flex items-center gap-1 pointer-events-auto text-xs max-w-full overflow-x-auto">
+          <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider pl-1 hidden md:inline">
             Focus:
           </span>
           {APP_CONFIG.studyDistricts.map((dName) => {
@@ -226,7 +228,7 @@ export const JKLeafletMap: React.FC<JKLeafletMapProps> = ({
               <button
                 key={dName}
                 onClick={() => onSelectDistrict && onSelectDistrict(dName)}
-                className={`px-2 py-1 rounded text-[11px] font-semibold transition-all cursor-pointer ${
+                className={`px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-[10px] sm:text-[11px] font-semibold transition-all cursor-pointer whitespace-nowrap ${
                   isSel
                     ? 'bg-slate-900 text-white shadow-2xs'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
@@ -239,35 +241,46 @@ export const JKLeafletMap: React.FC<JKLeafletMapProps> = ({
 
           <button
             onClick={handleResetView}
-            className="px-2 py-1 rounded bg-indigo-50 border border-indigo-200 text-indigo-700 text-[11px] font-semibold hover:bg-indigo-100 transition-colors flex items-center gap-1 cursor-pointer ml-1"
-            title="Reset map view to fit all J&K districts including Jammu"
+            className="px-1.5 sm:px-2 py-0.5 sm:py-1 rounded bg-indigo-50 border border-indigo-200 text-indigo-700 text-[10px] sm:text-[11px] font-semibold hover:bg-indigo-100 transition-colors flex items-center gap-1 cursor-pointer whitespace-nowrap ml-0.5"
+            title="Reset map view"
           >
-            <Maximize2 className="w-3 h-3" />
-            <span>Fit All</span>
+            <Maximize2 className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+            <span>Fit</span>
           </button>
         </div>
       </div>
 
-      {/* Map Legend Floating Overlay */}
-      <div className="absolute bottom-3 right-3 z-[1000] bg-white/95 backdrop-blur-xs px-3 py-2 rounded-lg border border-slate-200/90 shadow-sm text-[11px] space-y-1.5">
-        <div className="font-semibold text-slate-800 text-[10px] uppercase tracking-wider mb-1">
-          Empirical Reliability
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-600" />
-          <span className="text-slate-600">High Reliability (R ≥ 0.70)</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-          <span className="text-slate-600">Moderate (0.50 ≤ R &lt; 0.70)</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-orange-500" />
-          <span className="text-slate-600">Low Reliability (R &lt; 0.50)</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-rose-600 animate-pulse" />
-          <span className="text-slate-600">High Uncertainty / Bust Risk</span>
+      {/* Map Legend Floating Overlay (Collapsible on mobile) */}
+      <div className="absolute bottom-2 sm:bottom-3 right-2 sm:right-3 z-[1000] pointer-events-auto">
+        {/* Toggle button on mobile */}
+        <button
+          onClick={() => setIsLegendOpen(!isLegendOpen)}
+          className="sm:hidden px-2.5 py-1 rounded-lg bg-white/95 backdrop-blur-xs border border-slate-200/90 shadow-sm text-[10px] font-semibold text-slate-700 flex items-center gap-1.5 cursor-pointer ml-auto mb-1"
+        >
+          <span>Legend</span>
+          <span className="text-[8px]">{isLegendOpen ? '▲' : '▼'}</span>
+        </button>
+
+        <div className={`${isLegendOpen ? 'block' : 'hidden sm:block'} bg-white/95 backdrop-blur-xs px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg border border-slate-200/90 shadow-sm text-[10px] sm:text-[11px] space-y-1 sm:space-y-1.5 max-w-[200px] sm:max-w-none`}>
+          <div className="font-semibold text-slate-800 text-[9px] sm:text-[10px] uppercase tracking-wider mb-0.5 sm:mb-1">
+            Empirical Reliability
+          </div>
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-emerald-600 shrink-0" />
+            <span className="text-slate-600">High Reliability (R ≥ 0.70)</span>
+          </div>
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-amber-500 shrink-0" />
+            <span className="text-slate-600">Moderate (0.50 ≤ R &lt; 0.70)</span>
+          </div>
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-orange-500 shrink-0" />
+            <span className="text-slate-600">Low Reliability (R &lt; 0.50)</span>
+          </div>
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-rose-600 animate-pulse shrink-0" />
+            <span className="text-slate-600">High Uncertainty / Bust Risk</span>
+          </div>
         </div>
       </div>
 

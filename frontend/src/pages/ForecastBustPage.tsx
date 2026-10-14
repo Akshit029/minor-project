@@ -167,7 +167,7 @@ export const ForecastBustPage: React.FC = () => {
               <p className="text-slate-600 text-[11px]">
                 Interpretable baseline utilizing balanced class weighting to handle the 90:10 imbalance ratio without synthetic oversampling.
               </p>
-              <div className="grid grid-cols-4 gap-2 pt-2 border-t border-slate-200 text-center font-mono">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-slate-200 text-center font-mono">
                 <div>
                   <span className="text-[10px] text-slate-400 block font-sans">Precision</span>
                   <span className="font-bold text-slate-800">{(models.logisticRegression.precision * 100).toFixed(1)}%</span>
@@ -200,7 +200,7 @@ export const ForecastBustPage: React.FC = () => {
               <p className="text-slate-600 text-[11px]">
                 Nonlinear ensemble capturing complex interactions between lead hours, issuance cycle, and mountainous elevation regimes.
               </p>
-              <div className="grid grid-cols-4 gap-2 pt-2 border-t border-slate-200 text-center font-mono">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-slate-200 text-center font-mono">
                 <div>
                   <span className="text-[10px] text-slate-400 block font-sans">Precision</span>
                   <span className="font-bold text-slate-800">{(models.randomForest.precision * 100).toFixed(1)}%</span>
@@ -282,7 +282,7 @@ export const ForecastBustPage: React.FC = () => {
         }
       >
         <div className="overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-2xs">
-          <table className="w-full text-xs text-left">
+          <table className="w-full text-xs text-left min-w-[620px]">
             <thead className="bg-slate-50/80 text-slate-700 font-semibold border-b border-slate-200">
               <tr>
                 <th className="py-3 px-4">District</th>

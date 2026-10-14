@@ -52,7 +52,10 @@ export const ReliabilityHeatmap: React.FC<ReliabilityHeatmapProps> = ({
 
       {/* Heatmap Grid Container */}
       <div className="overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-2xs">
-        <table className="w-full text-xs border-collapse">
+        <div className="text-[11px] text-slate-500 sm:hidden px-3.5 py-1.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+          <span>← Scroll horizontally to inspect all 10 lead days →</span>
+        </div>
+        <table className="w-full text-xs border-collapse min-w-[640px]">
           <thead>
             <tr className="bg-slate-50/80 border-b border-slate-200 text-slate-600">
               <th className="py-3 px-4 text-left font-semibold text-slate-800 w-32 border-r border-slate-200">

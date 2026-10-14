@@ -254,8 +254,11 @@ export const AlertsPage: React.FC = () => {
 
       {/* Alerts Table */}
       <Card noPadding className="overflow-hidden">
+        <div className="text-[11px] text-slate-500 sm:hidden px-3.5 py-2 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+          <span>← Scroll horizontally to inspect metrics &amp; actions →</span>
+        </div>
         <div className="overflow-x-auto">
-          <table className="w-full text-xs text-left border-collapse">
+          <table className="w-full text-xs text-left border-collapse min-w-[780px]">
             <thead className="bg-slate-50/90 text-slate-700 font-semibold border-b border-slate-200">
               <tr>
                 <th

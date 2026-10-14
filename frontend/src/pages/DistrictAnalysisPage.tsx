@@ -80,18 +80,18 @@ export const DistrictAnalysisPage: React.FC = () => {
   return (
     <div className="space-y-6 font-sans">
       {/* Header and District Selector Dropdown */}
-      <div className="bg-white rounded-xl border border-slate-200/90 shadow-2xs p-6 space-y-4">
+      <div className="bg-white rounded-xl border border-slate-200/90 shadow-2xs p-4 sm:p-6 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2 mb-1.5">
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-1.5">
               <Badge variant="blue" size="xs">
                 Microclimatic District Analysis
               </Badge>
               <Badge variant="slate" size="xs">
-                Orographic Elevation: {district.elevationMeters}m
+                Elevation: {district.elevationMeters}m
               </Badge>
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+            <h1 className="text-lg sm:text-2xl font-bold text-slate-900 tracking-tight">
               {district.name} In-Depth Verification
             </h1>
             <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl leading-relaxed">
@@ -100,9 +100,9 @@ export const DistrictAnalysisPage: React.FC = () => {
           </div>
 
           {/* Interactive District Dropdown Selector */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 self-start sm:self-auto">
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-              Select District:
+              District:
             </span>
             <select
               value={selectedDistrictName}
@@ -119,28 +119,28 @@ export const DistrictAnalysisPage: React.FC = () => {
         </div>
 
         {/* Current Forecast Strip */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-slate-100 text-xs">
-          <div className="flex items-center gap-2 text-slate-600">
-            <Thermometer className="w-4 h-4 text-slate-400" />
-            <span>Temp: <strong className="font-mono text-slate-900">{district.currentForecast.temperature} °C</strong></span>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 pt-3 border-t border-slate-100 text-xs">
+          <div className="flex items-center gap-1.5 sm:gap-2 text-slate-600">
+            <Thermometer className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400 shrink-0" />
+            <span className="truncate">Temp: <strong className="font-mono text-slate-900">{district.currentForecast.temperature} °C</strong></span>
           </div>
-          <div className="flex items-center gap-2 text-slate-600">
-            <CloudRain className="w-4 h-4 text-slate-400" />
-            <span>Precipitation: <strong className="font-mono text-slate-900">{district.currentForecast.rainfall} mm</strong></span>
+          <div className="flex items-center gap-1.5 sm:gap-2 text-slate-600">
+            <CloudRain className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400 shrink-0" />
+            <span className="truncate">Precip: <strong className="font-mono text-slate-900">{district.currentForecast.rainfall} mm</strong></span>
           </div>
-          <div className="flex items-center gap-2 text-slate-600">
-            <Wind className="w-4 h-4 text-slate-400" />
-            <span>Wind: <strong className="font-mono text-slate-900">{district.currentForecast.windSpeed} km/h</strong></span>
+          <div className="flex items-center gap-1.5 sm:gap-2 text-slate-600">
+            <Wind className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400 shrink-0" />
+            <span className="truncate">Wind: <strong className="font-mono text-slate-900">{district.currentForecast.windSpeed} km/h</strong></span>
           </div>
-          <div className="flex items-center gap-2 text-slate-600">
-            <Compass className="w-4 h-4 text-slate-400" />
-            <span>Cycle: <strong className="font-mono text-slate-900">{district.currentForecast.initCycle}</strong></span>
+          <div className="flex items-center gap-1.5 sm:gap-2 text-slate-600">
+            <Compass className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400 shrink-0" />
+            <span className="truncate">Cycle: <strong className="font-mono text-slate-900">{district.currentForecast.initCycle}</strong></span>
           </div>
         </div>
       </div>
 
       {/* Current District Verification Status KPIs */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {/* Reliability */}
         <Card noPadding className="p-4 bg-white">
           <div className="flex items-center justify-between mb-2">
