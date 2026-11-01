@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { WeatherApi } from '../services/api';
 import { Card } from '../components/common/Card';
 import { Badge } from '../components/common/Badge';
-import { MetricValue } from '../components/common/MetricValue';
 import type {
   GlobalExplainabilityData,
   HighErrorEventAnalyzed,
@@ -18,29 +17,19 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   Cell,
   ReferenceLine
 } from 'recharts';
 import {
   Sliders,
   Compass,
-  TrendingUp,
   AlertTriangle,
   Info,
-  CheckCircle,
   Clock,
-  MapPin,
-  Calendar,
   Layers,
-  ArrowRight,
-  Send,
   Sparkles,
-  ShieldAlert,
-  Wind,
   Droplets,
-  Thermometer,
-  HelpCircle
+  Thermometer
 } from 'lucide-react';
 
 export const FeatureInfluencePage: React.FC = () => {

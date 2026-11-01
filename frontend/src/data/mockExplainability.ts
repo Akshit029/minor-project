@@ -1,8 +1,7 @@
 import type {
   GlobalExplainabilityData,
   HighErrorEventAnalyzed,
-  MeteorologicalAuditData,
-  LocalExplanationResult
+  MeteorologicalAuditData
 } from '../types/weather';
 
 export const MOCK_GLOBAL_EXPLAINABILITY: GlobalExplainabilityData = {
