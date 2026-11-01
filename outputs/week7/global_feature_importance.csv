@@ -1,0 +1,11 @@
+feature,raw_feature,mean_abs_shap,mean_shap,std_shap,min_shap,max_shap,relative_importance_pct,pct_positive_impact,dominant_direction
+lead_hours,num__lead_hours,0.9458,-0.0,1.0967,-1.7341,1.7341,39.53,45.5,RISK_DECREASING
+valid_hour,num__valid_hour,0.6879,0.0,0.7939,-0.9774,1.4503,28.75,45.5,RISK_INCREASING
+forecast_value,num__forecast_value,0.4449,0.0,0.4961,-1.0142,0.6698,18.6,47.7,RISK_INCREASING
+district: Jammu,cat__district_Jammu,0.1209,-0.0,0.1396,-0.0806,0.2418,5.05,25.0,RISK_DECREASING
+district: Baramulla,cat__district_Baramulla,0.0911,0.0,0.1052,-0.1823,0.0608,3.81,75.0,RISK_INCREASING
+district: Anantnag,cat__district_Anantnag,0.0659,0.0,0.0761,-0.1319,0.044,2.76,75.0,RISK_INCREASING
+district: Srinagar,cat__district_Srinagar,0.0361,0.0,0.0417,-0.0241,0.0723,1.51,25.0,RISK_DECREASING
+lead_day,num__lead_day,0.0,0.0,0.0,-0.0,0.0,0.0,0.0,RISK_DECREASING
+init_hour,num__init_hour,0.0,0.0,0.0,0.0,0.0,0.0,0.0,RISK_DECREASING
+valid_month,num__valid_month,0.0,0.0,0.0,0.0,0.0,0.0,0.0,RISK_DECREASING

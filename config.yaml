@@ -68,6 +68,8 @@ output_dirs:
   week4_figures: "outputs/week4/figures"
   week5: "outputs/week5"
   week5_figures: "outputs/week5/figures"
+  week7: "outputs/week7"
+  week7_figures: "outputs/week7/figures"
 
 week3:
   lead_days_range: [1, 10]
@@ -97,3 +99,9 @@ week5:
   test_ratio: 0.15
   random_seed: 42
   classification_threshold: 0.50
+
+week7:
+  top_events_count: 5
+  figures_dpi: 300
+  explainer_type: "auto"
+  confidence_level: 0.95

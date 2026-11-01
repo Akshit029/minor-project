@@ -38,6 +38,8 @@ export const Navbar: React.FC<NavbarProps> = ({
         return 'District In-Depth Verification';
       case '/forecast-bust':
         return 'Forecast-Bust ML Prediction';
+      case '/ai-assistant':
+        return 'Weather Reliability AI Assistant';
       case '/alerts':
         return 'Alerts & Anomaly History';
       case '/model-performance':

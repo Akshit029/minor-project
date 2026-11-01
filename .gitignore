@@ -1,21 +1,60 @@
-# Python virtual environment
+# ==============================================================================
+# Git Ignore Configuration
+# Spatiotemporal Weather Forecast Reliability & Uncertainty Project
+# ==============================================================================
+
+# Python Virtual Environments
 .venv/
 venv/
 ENV/
 env/
+env.bak/
+venv.bak/
+
+# Python Bytecode & Cache
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+build/
+dist/
 
-# Data and large files
+# Node.js & Frontend Build Outputs
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+dist-ssr/
+frontend/dist-ssr/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment Variables & Sensitive Credentials
+.env
+.env.*
+*.env
+!.env.example
+!frontend/.env.example
+.cdsapirc
+credentials.json
+*.pem
+*.key
+
+# Data and Raw Binary Meteorology Files
 data/raw/gfs/*.grb2
 data/raw/gfs/*.grib2
 data/raw/gfs/*.idx
 data/raw/era5/*.nc
 data/raw/era5/*.grib
 
-# Keep directory structures
+# Preserve Directory Structures
 !data/raw/gfs/.gitkeep
 !data/raw/era5/.gitkeep
 !data/processed/.gitkeep
@@ -23,13 +62,13 @@ data/raw/era5/*.grib
 !outputs/tables/.gitkeep
 !outputs/reports/.gitkeep
 
-# Credentials
-.cdsapirc
-*.env
-credentials.json
-
-# IDE and OS
+# IDEs, Editors & OS Metadata
 .DS_Store
+Thumbs.db
 .vscode/
+!.vscode/extensions.json
 .idea/
 *.swp
+*.swo
+*.sublime-workspace
+*.sublime-project

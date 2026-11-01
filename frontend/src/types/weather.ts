@@ -148,3 +148,141 @@ export interface ForecastBustPredictionResult {
   modelUsed: 'Logistic Regression' | 'Random Forest';
   computedTimestamp: string;
 }
+
+export interface ShapFeatureRanking {
+  feature: string;
+  raw_feature: string;
+  mean_abs_shap: number;
+  mean_shap: number;
+  std_shap: number;
+  min_shap: number;
+  max_shap: number;
+  relative_importance_pct: number;
+  pct_positive_impact: number;
+  dominant_direction: 'RISK_INCREASING' | 'RISK_DECREASING';
+}
+
+export interface GroupedConceptRanking {
+  concept: string;
+  mean_abs_shap: number;
+  relative_importance_pct: number;
+}
+
+export interface GlobalExplainabilityData {
+  explainer_type: string;
+  estimator: string;
+  explanation_space: string;
+  sample_count: number;
+  base_value_log_odds: number;
+  base_probability: number;
+  feature_rankings: ShapFeatureRanking[];
+  grouped_rankings: GroupedConceptRanking[];
+}
+
+export interface LocalFeatureContribution {
+  feature: string;
+  raw_value: any;
+  transformed_value: number;
+  shap_value: number;
+  direction: 'INCREASED_RISK' | 'DECREASED_RISK';
+  relative_contribution_pct: number;
+}
+
+export interface HighErrorEventAnalyzed {
+  event_id: number;
+  district: DistrictName;
+  lead_hours: number;
+  lead_day: number;
+  initialization_time: string;
+  valid_time: string;
+  forecast_value_c: number;
+  reference_value_c: number | null;
+  actual_error_c: number;
+  actual_absolute_error_c: number;
+  empirical_bust_threshold_c: number | null;
+  actual_is_bust: number;
+  model_prediction: {
+    bust_probability: number;
+    predicted_class: number;
+    risk_level: string;
+    classification_threshold: number;
+    model_id: string;
+  };
+  shap_summary: {
+    base_value_log_odds: number;
+    base_probability: number;
+    sum_shap_values: number;
+    final_log_odds: number;
+    explanation_space: string;
+  };
+  top_positive_features: LocalFeatureContribution[];
+  top_negative_features: LocalFeatureContribution[];
+  all_contributions: LocalFeatureContribution[];
+  narrative: string;
+  scientific_distinction_note: string;
+}
+
+export interface MeteorologicalAuditItem {
+  variable: string;
+  display_name: string;
+  units: string;
+  in_gfs_archive: boolean;
+  in_era5_archive: boolean;
+  in_processed_data: boolean;
+  in_week5_model: boolean;
+  required_source_key: string;
+  audit_finding: string;
+  scientific_rationale: string;
+}
+
+export interface MeteorologicalAuditData {
+  audit_date: string;
+  study_region: string;
+  variables_audited: MeteorologicalAuditItem[];
+  humidity_available: boolean;
+  wind_speed_available: boolean;
+  exploratory_meteorological_analysis: {
+    lead_time_relationship?: {
+      description: string;
+      lead_hours: number[];
+      mean_abs_error: number[];
+      correlation: number;
+    };
+    temperature_relationship?: {
+      description: string;
+      bins: string[];
+      mean_abs_error: number[];
+      correlation: number;
+    };
+    diurnal_relationship?: {
+      description: string;
+      valid_hours: number[];
+      mean_abs_error: number[];
+    };
+  };
+  scientific_disclaimer: string;
+}
+
+export interface LocalExplanationResult {
+  district: DistrictName;
+  leadDay: number;
+  forecastValue: number;
+  prediction: {
+    bust_probability: number;
+    predicted_class: number;
+    risk_level: string;
+    classification_threshold: number;
+    model_id: string;
+  };
+  shapSummary: {
+    base_value_log_odds: number;
+    base_probability: number;
+    sum_shap_values: number;
+    final_log_odds: number;
+    explanation_space: string;
+  };
+  featuresIncreasingRisk: LocalFeatureContribution[];
+  featuresDecreasingRisk: LocalFeatureContribution[];
+  allFeatureContributions: LocalFeatureContribution[];
+  narrativeExplanation: string;
+}

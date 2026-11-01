@@ -26,6 +26,10 @@ Supports:
 
 import os
 import sys
+
+# Ensure Matplotlib uses a writable sandbox cache directory
+os.environ.setdefault("MPLCONFIGDIR", "/tmp/matplotlib")
+
 from pathlib import Path
 
 # Ensure project root is on sys.path
@@ -54,6 +58,7 @@ from src.reliability import run_week4_reliability
 from src.visualize_week4 import generate_all_week4_visualizations
 from src.forecast_bust import run_week5_forecast_bust
 from src.visualize_week5 import generate_all_week5_visualizations
+from src.explainability import run_week7_explainability
 from src.generate_reports import generate_all_reports
 
 logging.basicConfig(
@@ -83,6 +88,8 @@ def ensure_directories(config: dict):
         config["output_dirs"].get("week4_figures", "outputs/week4/figures"),
         config["output_dirs"].get("week5", "outputs/week5"),
         config["output_dirs"].get("week5_figures", "outputs/week5/figures"),
+        config["output_dirs"].get("week7", "outputs/week7"),
+        config["output_dirs"].get("week7_figures", "outputs/week7/figures"),
     ]
     for d in dirs:
         os.makedirs(d, exist_ok=True)
@@ -296,7 +303,7 @@ def run_pipeline(
 
     # 14. Week 5 Visualizations
     if stage in ["all", "visualize", "week5", "viz_week5"]:
-        print("\n[14/14] Generating Week 5 PR Curves & Model Comparison Figures...")
+        print("\n[14/15] Generating Week 5 PR Curves & Model Comparison Figures...")
         try:
             generate_all_week5_visualizations(config_path)
             print("-> Saved Week 5 figures to outputs/week5/figures/.")
@@ -306,6 +313,21 @@ def run_pipeline(
             stage_status["14_visualize_week5"] = f"PARTIAL: {e}"
     else:
         stage_status["14_visualize_week5"] = "SKIPPED"
+
+    # 15. Week 7: SHAP Feature Influence & High-Error Explanations
+    if stage in ["all", "week7", "explainability", "shap"]:
+        print("\n[15/15] Running Week 7 SHAP Feature Influence Analysis & High-Error Explanations...")
+        try:
+            w7_res = run_week7_explainability(config_path)
+            n_events = len(w7_res.get("high_error_events_analyzed", []))
+            print(f"-> Week 7 completed: SHAP global importance & {n_events} high-error events analyzed.")
+            stage_status["15_week7_explainability"] = f"COMPLETED ({n_events} events)"
+        except Exception as e:
+            print(f"[ERROR in Week 7 Explainability]: {e}")
+            stage_status["15_week7_explainability"] = f"FAILED: {e}"
+            sys.exit(1)
+    else:
+        stage_status["15_week7_explainability"] = "SKIPPED"
 
     # Reports Compilation
     if stage in ["all", "reports"]:
@@ -330,14 +352,14 @@ def run_pipeline(
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Weather Forecast Reliability & Uncertainty Pipeline (Weeks 1-5)")
+    parser = argparse.ArgumentParser(description="Weather Forecast Reliability & Uncertainty Pipeline (Weeks 1-7)")
     parser.add_argument("--config", default="config.yaml", help="Path to config.yaml")
     parser.add_argument("--test", action="store_true", help="Execute minimal fast test mode")
     parser.add_argument("--skip-download", action="store_true", help="Skip downloading fresh data and reuse local files")
     parser.add_argument(
         "--stage", default="all",
         choices=["all", "download", "preprocess", "quality", "features", "anomaly", "validate",
-                 "week3", "week4", "week5", "visualize", "reports"],
+                 "week3", "week4", "week5", "visualize", "week7", "explainability", "shap", "reports"],
         help="Specify individual stage to run or 'all'"
     )
     args = parser.parse_args()

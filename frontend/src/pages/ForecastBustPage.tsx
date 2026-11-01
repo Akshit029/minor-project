@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { WeatherApi } from '../services/api';
 import { Card } from '../components/common/Card';
 import { Badge } from '../components/common/Badge';
@@ -29,7 +30,8 @@ import {
   CheckCircle, 
   Send,
   Database,
-  Info
+  Info,
+  ArrowRight
 } from 'lucide-react';
 
 export const ForecastBustPage: React.FC = () => {
@@ -143,6 +145,29 @@ export const ForecastBustPage: React.FC = () => {
             Trained ML Pipeline
           </Badge>
         </div>
+      </div>
+
+      {/* Week 7 Feature Influence Banner Callout */}
+      <div className="bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-blue-500/10 border border-indigo-200/80 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+            <Sliders className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="font-bold text-slate-900 text-sm">
+              Week 7: SHAP Feature Influence &amp; High-Error Explanations
+            </h3>
+            <p className="text-xs text-slate-600 mt-0.5">
+              Inspect why the model flagged specific forecasts as busts, and explore local waterfall attributions.
+            </p>
+          </div>
+        </div>
+        <Link
+          to="/feature-influence"
+          className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-lg transition-colors flex items-center gap-1.5 shrink-0 shadow-xs"
+        >
+          Explore SHAP Analysis <ArrowRight className="w-3.5 h-3.5" />
+        </Link>
       </div>
 
       {/* Model Performance Overview Grid */}

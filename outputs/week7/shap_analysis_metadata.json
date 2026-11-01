@@ -1,0 +1,1131 @@
+{
+  "week": 7,
+  "title": "SHAP-based Feature Influence Analysis for Medium-Range Weather Forecasts",
+  "study_area": "Jammu and Kashmir (Srinagar, Jammu, Anantnag, Baramulla)",
+  "model_explained": "LogisticRegression_BustClassifier",
+  "estimator_architecture": "LogisticRegression",
+  "explainer_class": "shap.LinearExplainer",
+  "explanation_space": "log-odds (logit)",
+  "total_verification_records": 44,
+  "global_analysis": {
+    "explainer_type": "shap.LinearExplainer",
+    "estimator": "LogisticRegression",
+    "explanation_space": "log-odds (logit)",
+    "sample_count": 44,
+    "base_value_log_odds": -0.2747,
+    "base_probability": 0.4318,
+    "feature_rankings": [
+      {
+        "feature": "lead_hours",
+        "raw_feature": "num__lead_hours",
+        "mean_abs_shap": 0.9458,
+        "mean_shap": -0.0,
+        "std_shap": 1.0967,
+        "min_shap": -1.7341,
+        "max_shap": 1.7341,
+        "relative_importance_pct": 39.53,
+        "pct_positive_impact": 45.5,
+        "dominant_direction": "RISK_DECREASING"
+      },
+      {
+        "feature": "valid_hour",
+        "raw_feature": "num__valid_hour",
+        "mean_abs_shap": 0.6879,
+        "mean_shap": 0.0,
+        "std_shap": 0.7939,
+        "min_shap": -0.9774,
+        "max_shap": 1.4503,
+        "relative_importance_pct": 28.75,
+        "pct_positive_impact": 45.5,
+        "dominant_direction": "RISK_INCREASING"
+      },
+      {
+        "feature": "forecast_value",
+        "raw_feature": "num__forecast_value",
+        "mean_abs_shap": 0.4449,
+        "mean_shap": 0.0,
+        "std_shap": 0.4961,
+        "min_shap": -1.0142,
+        "max_shap": 0.6698,
+        "relative_importance_pct": 18.6,
+        "pct_positive_impact": 47.7,
+        "dominant_direction": "RISK_INCREASING"
+      },
+      {
+        "feature": "district: Jammu",
+        "raw_feature": "cat__district_Jammu",
+        "mean_abs_shap": 0.1209,
+        "mean_shap": -0.0,
+        "std_shap": 0.1396,
+        "min_shap": -0.0806,
+        "max_shap": 0.2418,
+        "relative_importance_pct": 5.05,
+        "pct_positive_impact": 25.0,
+        "dominant_direction": "RISK_DECREASING"
+      },
+      {
+        "feature": "district: Baramulla",
+        "raw_feature": "cat__district_Baramulla",
+        "mean_abs_shap": 0.0911,
+        "mean_shap": 0.0,
+        "std_shap": 0.1052,
+        "min_shap": -0.1823,
+        "max_shap": 0.0608,
+        "relative_importance_pct": 3.81,
+        "pct_positive_impact": 75.0,
+        "dominant_direction": "RISK_INCREASING"
+      },
+      {
+        "feature": "district: Anantnag",
+        "raw_feature": "cat__district_Anantnag",
+        "mean_abs_shap": 0.0659,
+        "mean_shap": 0.0,
+        "std_shap": 0.0761,
+        "min_shap": -0.1319,
+        "max_shap": 0.044,
+        "relative_importance_pct": 2.76,
+        "pct_positive_impact": 75.0,
+        "dominant_direction": "RISK_INCREASING"
+      },
+      {
+        "feature": "district: Srinagar",
+        "raw_feature": "cat__district_Srinagar",
+        "mean_abs_shap": 0.0361,
+        "mean_shap": 0.0,
+        "std_shap": 0.0417,
+        "min_shap": -0.0241,
+        "max_shap": 0.0723,
+        "relative_importance_pct": 1.51,
+        "pct_positive_impact": 25.0,
+        "dominant_direction": "RISK_DECREASING"
+      },
+      {
+        "feature": "lead_day",
+        "raw_feature": "num__lead_day",
+        "mean_abs_shap": 0.0,
+        "mean_shap": 0.0,
+        "std_shap": 0.0,
+        "min_shap": -0.0,
+        "max_shap": 0.0,
+        "relative_importance_pct": 0.0,
+        "pct_positive_impact": 0.0,
+        "dominant_direction": "RISK_DECREASING"
+      },
+      {
+        "feature": "init_hour",
+        "raw_feature": "num__init_hour",
+        "mean_abs_shap": 0.0,
+        "mean_shap": 0.0,
+        "std_shap": 0.0,
+        "min_shap": 0.0,
+        "max_shap": 0.0,
+        "relative_importance_pct": 0.0,
+        "pct_positive_impact": 0.0,
+        "dominant_direction": "RISK_DECREASING"
+      },
+      {
+        "feature": "valid_month",
+        "raw_feature": "num__valid_month",
+        "mean_abs_shap": 0.0,
+        "mean_shap": 0.0,
+        "std_shap": 0.0,
+        "min_shap": 0.0,
+        "max_shap": 0.0,
+        "relative_importance_pct": 0.0,
+        "pct_positive_impact": 0.0,
+        "dominant_direction": "RISK_DECREASING"
+      }
+    ],
+    "grouped_rankings": [
+      {
+        "concept": "lead_time (forecast horizon)",
+        "mean_abs_shap": 0.9458,
+        "relative_importance_pct": 39.53
+      },
+      {
+        "concept": "diurnal_cycle (timing)",
+        "mean_abs_shap": 0.6879,
+        "relative_importance_pct": 28.75
+      },
+      {
+        "concept": "forecast_temperature (\u00b0C)",
+        "mean_abs_shap": 0.4449,
+        "relative_importance_pct": 18.59
+      },
+      {
+        "concept": "district (geographic terrain)",
+        "mean_abs_shap": 0.314,
+        "relative_importance_pct": 13.12
+      },
+      {
+        "concept": "seasonality (month)",
+        "mean_abs_shap": 0.0,
+        "relative_importance_pct": 0.0
+      }
+    ]
+  },
+  "high_error_events_analyzed": [
+    {
+      "event_id": 21,
+      "district": "Baramulla",
+      "lead_hours": 15.0,
+      "lead_day": 1.0,
+      "initialization_time": "2026-09-15 00:00:00",
+      "valid_time": "2026-09-15 15:00:00",
+      "forecast_value_c": 13.46,
+      "reference_value_c": 23.48,
+      "actual_error_c": -10.02,
+      "actual_absolute_error_c": 10.02,
+      "empirical_bust_threshold_c": 8.35,
+      "actual_is_bust": 1,
+      "model_prediction": {
+        "bust_probability": 0.6741,
+        "predicted_class": 1,
+        "risk_level": "MEDIUM RISK",
+        "classification_threshold": 0.5,
+        "model_id": "LogisticRegression_BustClassifier"
+      },
+      "shap_summary": {
+        "base_value_log_odds": -0.2747,
+        "base_probability": 0.4318,
+        "sum_shap_values": 1.0014,
+        "final_log_odds": 0.7267,
+        "explanation_space": "log-odds (logit)"
+      },
+      "top_positive_features": [
+        {
+          "feature": "valid_hour",
+          "raw_value": 15.0,
+          "transformed_value": 0.797,
+          "shap_value": 0.7567,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 48.03
+        },
+        {
+          "feature": "forecast_value",
+          "raw_value": 13.46,
+          "transformed_value": -1.044,
+          "shap_value": 0.4877,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 30.96
+        },
+        {
+          "feature": "district: Anantnag",
+          "raw_value": "district=Baramulla",
+          "transformed_value": 0.0,
+          "shap_value": 0.044,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 2.79
+        }
+      ],
+      "top_negative_features": [
+        {
+          "feature": "district: Baramulla",
+          "raw_value": "district=Baramulla",
+          "transformed_value": 1.0,
+          "shap_value": -0.1823,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 11.57
+        },
+        {
+          "feature": "district: Jammu",
+          "raw_value": "district=Baramulla",
+          "transformed_value": 0.0,
+          "shap_value": -0.0806,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 5.12
+        },
+        {
+          "feature": "district: Srinagar",
+          "raw_value": "district=Baramulla",
+          "transformed_value": 0.0,
+          "shap_value": -0.0241,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 1.53
+        }
+      ],
+      "all_contributions": [
+        {
+          "feature": "valid_hour",
+          "raw_value": 15.0,
+          "transformed_value": 0.797,
+          "shap_value": 0.7567,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 48.03
+        },
+        {
+          "feature": "forecast_value",
+          "raw_value": 13.46,
+          "transformed_value": -1.044,
+          "shap_value": 0.4877,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 30.96
+        },
+        {
+          "feature": "district: Baramulla",
+          "raw_value": "district=Baramulla",
+          "transformed_value": 1.0,
+          "shap_value": -0.1823,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 11.57
+        },
+        {
+          "feature": "district: Jammu",
+          "raw_value": "district=Baramulla",
+          "transformed_value": 0.0,
+          "shap_value": -0.0806,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 5.12
+        },
+        {
+          "feature": "district: Anantnag",
+          "raw_value": "district=Baramulla",
+          "transformed_value": 0.0,
+          "shap_value": 0.044,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 2.79
+        },
+        {
+          "feature": "district: Srinagar",
+          "raw_value": "district=Baramulla",
+          "transformed_value": 0.0,
+          "shap_value": -0.0241,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 1.53
+        },
+        {
+          "feature": "lead_hours",
+          "raw_value": 15.0,
+          "transformed_value": 0.797,
+          "shap_value": 0.0,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 0.0
+        },
+        {
+          "feature": "lead_day",
+          "raw_value": 1.0,
+          "transformed_value": 0.0,
+          "shap_value": -0.0,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 0.0
+        },
+        {
+          "feature": "init_hour",
+          "raw_value": 0.0,
+          "transformed_value": 0.0,
+          "shap_value": 0.0,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 0.0
+        },
+        {
+          "feature": "valid_month",
+          "raw_value": 9.0,
+          "transformed_value": 0.0,
+          "shap_value": 0.0,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 0.0
+        }
+      ],
+      "narrative": "The model predicted a forecast bust probability of 67.4% (MEDIUM RISK). Features that increased the predicted bust risk were: valid_hour (+0.76), forecast_value (+0.49), district: Anantnag (+0.04). Features that mitigated/reduced the predicted bust risk were: district: Baramulla (-0.18), district: Jammu (-0.08), district: Srinagar (-0.02).",
+      "scientific_distinction_note": "Actual Forecast Error = Forecast - ERA5 = -10.02\u00b0C (magnitude 10.02\u00b0C). Predicted Bust Probability = 67.4%. Actual error reflects retrospective ground-truth verification; predicted bust risk reflects prospective model classification based strictly on issuance features."
+    },
+    {
+      "event_id": 32,
+      "district": "Anantnag",
+      "lead_hours": 24.0,
+      "lead_day": 2.0,
+      "initialization_time": "2026-09-15 00:00:00",
+      "valid_time": "2026-09-16 00:00:00",
+      "forecast_value_c": 10.98,
+      "reference_value_c": 19.98,
+      "actual_error_c": -9.0,
+      "actual_absolute_error_c": 9.0,
+      "empirical_bust_threshold_c": 7.68,
+      "actual_is_bust": 1,
+      "model_prediction": {
+        "bust_probability": 0.5701,
+        "predicted_class": 1,
+        "risk_level": "MEDIUM RISK",
+        "classification_threshold": 0.5,
+        "model_id": "LogisticRegression_BustClassifier"
+      },
+      "shap_summary": {
+        "base_value_log_odds": -0.2747,
+        "base_probability": 0.4318,
+        "sum_shap_values": 0.5571,
+        "final_log_odds": 0.2823,
+        "explanation_space": "log-odds (logit)"
+      },
+      "top_positive_features": [
+        {
+          "feature": "lead_hours",
+          "raw_value": 24.0,
+          "transformed_value": 2.177,
+          "shap_value": 1.0404,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 34.86
+        },
+        {
+          "feature": "forecast_value",
+          "raw_value": 10.98,
+          "transformed_value": -1.396,
+          "shap_value": 0.6698,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 22.44
+        },
+        {
+          "feature": "district: Baramulla",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 0.0,
+          "shap_value": 0.0608,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 2.04
+        }
+      ],
+      "top_negative_features": [
+        {
+          "feature": "valid_hour",
+          "raw_value": 0.0,
+          "transformed_value": -1.502,
+          "shap_value": -0.9774,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 32.74
+        },
+        {
+          "feature": "district: Anantnag",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 1.0,
+          "shap_value": -0.1319,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 4.42
+        },
+        {
+          "feature": "district: Jammu",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 0.0,
+          "shap_value": -0.0806,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 2.7
+        }
+      ],
+      "all_contributions": [
+        {
+          "feature": "lead_hours",
+          "raw_value": 24.0,
+          "transformed_value": 2.177,
+          "shap_value": 1.0404,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 34.86
+        },
+        {
+          "feature": "valid_hour",
+          "raw_value": 0.0,
+          "transformed_value": -1.502,
+          "shap_value": -0.9774,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 32.74
+        },
+        {
+          "feature": "forecast_value",
+          "raw_value": 10.98,
+          "transformed_value": -1.396,
+          "shap_value": 0.6698,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 22.44
+        },
+        {
+          "feature": "district: Anantnag",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 1.0,
+          "shap_value": -0.1319,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 4.42
+        },
+        {
+          "feature": "district: Jammu",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 0.0,
+          "shap_value": -0.0806,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 2.7
+        },
+        {
+          "feature": "district: Baramulla",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 0.0,
+          "shap_value": 0.0608,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 2.04
+        },
+        {
+          "feature": "district: Srinagar",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 0.0,
+          "shap_value": -0.0241,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 0.81
+        },
+        {
+          "feature": "lead_day",
+          "raw_value": 2.0,
+          "transformed_value": 1.0,
+          "shap_value": 0.0,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 0.0
+        },
+        {
+          "feature": "init_hour",
+          "raw_value": 0.0,
+          "transformed_value": 0.0,
+          "shap_value": 0.0,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 0.0
+        },
+        {
+          "feature": "valid_month",
+          "raw_value": 9.0,
+          "transformed_value": 0.0,
+          "shap_value": 0.0,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 0.0
+        }
+      ],
+      "narrative": "The model predicted a forecast bust probability of 57.0% (MEDIUM RISK). Features that increased the predicted bust risk were: lead_hours (+1.04), forecast_value (+0.67), district: Baramulla (+0.06). Features that mitigated/reduced the predicted bust risk were: valid_hour (-0.98), district: Anantnag (-0.13), district: Jammu (-0.08).",
+      "scientific_distinction_note": "Actual Forecast Error = Forecast - ERA5 = -9.00\u00b0C (magnitude 9.00\u00b0C). Predicted Bust Probability = 57.0%. Actual error reflects retrospective ground-truth verification; predicted bust risk reflects prospective model classification based strictly on issuance features."
+    },
+    {
+      "event_id": 36,
+      "district": "Anantnag",
+      "lead_hours": 27.0,
+      "lead_day": 2.0,
+      "initialization_time": "2026-09-15 00:00:00",
+      "valid_time": "2026-09-16 03:00:00",
+      "forecast_value_c": 15.23,
+      "reference_value_c": 24.23,
+      "actual_error_c": -9.0,
+      "actual_absolute_error_c": 9.0,
+      "empirical_bust_threshold_c": 7.68,
+      "actual_is_bust": 1,
+      "model_prediction": {
+        "bust_probability": 0.6602,
+        "predicted_class": 1,
+        "risk_level": "MEDIUM RISK",
+        "classification_threshold": 0.5,
+        "model_id": "LogisticRegression_BustClassifier"
+      },
+      "shap_summary": {
+        "base_value_log_odds": -0.2747,
+        "base_probability": 0.4318,
+        "sum_shap_values": 0.9387,
+        "final_log_odds": 0.664,
+        "explanation_space": "log-odds (logit)"
+      },
+      "top_positive_features": [
+        {
+          "feature": "lead_hours",
+          "raw_value": 27.0,
+          "transformed_value": 2.636,
+          "shap_value": 1.3872,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 51.9
+        },
+        {
+          "feature": "forecast_value",
+          "raw_value": 15.23,
+          "transformed_value": -0.793,
+          "shap_value": 0.3578,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 13.39
+        },
+        {
+          "feature": "district: Baramulla",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 0.0,
+          "shap_value": 0.0608,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 2.27
+        }
+      ],
+      "top_negative_features": [
+        {
+          "feature": "valid_hour",
+          "raw_value": 3.0,
+          "transformed_value": -1.042,
+          "shap_value": -0.6306,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 23.59
+        },
+        {
+          "feature": "district: Anantnag",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 1.0,
+          "shap_value": -0.1319,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 4.93
+        },
+        {
+          "feature": "district: Jammu",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 0.0,
+          "shap_value": -0.0806,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 3.02
+        }
+      ],
+      "all_contributions": [
+        {
+          "feature": "lead_hours",
+          "raw_value": 27.0,
+          "transformed_value": 2.636,
+          "shap_value": 1.3872,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 51.9
+        },
+        {
+          "feature": "valid_hour",
+          "raw_value": 3.0,
+          "transformed_value": -1.042,
+          "shap_value": -0.6306,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 23.59
+        },
+        {
+          "feature": "forecast_value",
+          "raw_value": 15.23,
+          "transformed_value": -0.793,
+          "shap_value": 0.3578,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 13.39
+        },
+        {
+          "feature": "district: Anantnag",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 1.0,
+          "shap_value": -0.1319,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 4.93
+        },
+        {
+          "feature": "district: Jammu",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 0.0,
+          "shap_value": -0.0806,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 3.02
+        },
+        {
+          "feature": "district: Baramulla",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 0.0,
+          "shap_value": 0.0608,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 2.27
+        },
+        {
+          "feature": "district: Srinagar",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 0.0,
+          "shap_value": -0.0241,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 0.9
+        },
+        {
+          "feature": "lead_day",
+          "raw_value": 2.0,
+          "transformed_value": 1.0,
+          "shap_value": 0.0,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 0.0
+        },
+        {
+          "feature": "init_hour",
+          "raw_value": 0.0,
+          "transformed_value": 0.0,
+          "shap_value": 0.0,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 0.0
+        },
+        {
+          "feature": "valid_month",
+          "raw_value": 9.0,
+          "transformed_value": 0.0,
+          "shap_value": 0.0,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 0.0
+        }
+      ],
+      "narrative": "The model predicted a forecast bust probability of 66.0% (MEDIUM RISK). Features that increased the predicted bust risk were: lead_hours (+1.39), forecast_value (+0.36), district: Baramulla (+0.06). Features that mitigated/reduced the predicted bust risk were: valid_hour (-0.63), district: Anantnag (-0.13), district: Jammu (-0.08).",
+      "scientific_distinction_note": "Actual Forecast Error = Forecast - ERA5 = -9.00\u00b0C (magnitude 9.00\u00b0C). Predicted Bust Probability = 66.0%. Actual error reflects retrospective ground-truth verification; predicted bust risk reflects prospective model classification based strictly on issuance features."
+    },
+    {
+      "event_id": 20,
+      "district": "Anantnag",
+      "lead_hours": 15.0,
+      "lead_day": 1.0,
+      "initialization_time": "2026-09-15 00:00:00",
+      "valid_time": "2026-09-15 15:00:00",
+      "forecast_value_c": 15.36,
+      "reference_value_c": 24.23,
+      "actual_error_c": -8.87,
+      "actual_absolute_error_c": 8.87,
+      "empirical_bust_threshold_c": 8.04,
+      "actual_is_bust": 1,
+      "model_prediction": {
+        "bust_probability": 0.658,
+        "predicted_class": 1,
+        "risk_level": "MEDIUM RISK",
+        "classification_threshold": 0.5,
+        "model_id": "LogisticRegression_BustClassifier"
+      },
+      "shap_summary": {
+        "base_value_log_odds": -0.2747,
+        "base_probability": 0.4318,
+        "sum_shap_values": 0.9291,
+        "final_log_odds": 0.6544,
+        "explanation_space": "log-odds (logit)"
+      },
+      "top_positive_features": [
+        {
+          "feature": "valid_hour",
+          "raw_value": 15.0,
+          "transformed_value": 0.797,
+          "shap_value": 0.7567,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 53.96
+        },
+        {
+          "feature": "forecast_value",
+          "raw_value": 15.36,
+          "transformed_value": -0.774,
+          "shap_value": 0.3483,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 24.84
+        },
+        {
+          "feature": "district: Baramulla",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 0.0,
+          "shap_value": 0.0608,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 4.33
+        }
+      ],
+      "top_negative_features": [
+        {
+          "feature": "district: Anantnag",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 1.0,
+          "shap_value": -0.1319,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 9.4
+        },
+        {
+          "feature": "district: Jammu",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 0.0,
+          "shap_value": -0.0806,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 5.75
+        },
+        {
+          "feature": "district: Srinagar",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 0.0,
+          "shap_value": -0.0241,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 1.72
+        }
+      ],
+      "all_contributions": [
+        {
+          "feature": "valid_hour",
+          "raw_value": 15.0,
+          "transformed_value": 0.797,
+          "shap_value": 0.7567,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 53.96
+        },
+        {
+          "feature": "forecast_value",
+          "raw_value": 15.36,
+          "transformed_value": -0.774,
+          "shap_value": 0.3483,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 24.84
+        },
+        {
+          "feature": "district: Anantnag",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 1.0,
+          "shap_value": -0.1319,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 9.4
+        },
+        {
+          "feature": "district: Jammu",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 0.0,
+          "shap_value": -0.0806,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 5.75
+        },
+        {
+          "feature": "district: Baramulla",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 0.0,
+          "shap_value": 0.0608,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 4.33
+        },
+        {
+          "feature": "district: Srinagar",
+          "raw_value": "district=Anantnag",
+          "transformed_value": 0.0,
+          "shap_value": -0.0241,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 1.72
+        },
+        {
+          "feature": "lead_hours",
+          "raw_value": 15.0,
+          "transformed_value": 0.797,
+          "shap_value": 0.0,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 0.0
+        },
+        {
+          "feature": "lead_day",
+          "raw_value": 1.0,
+          "transformed_value": 0.0,
+          "shap_value": -0.0,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 0.0
+        },
+        {
+          "feature": "init_hour",
+          "raw_value": 0.0,
+          "transformed_value": 0.0,
+          "shap_value": 0.0,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 0.0
+        },
+        {
+          "feature": "valid_month",
+          "raw_value": 9.0,
+          "transformed_value": 0.0,
+          "shap_value": 0.0,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 0.0
+        }
+      ],
+      "narrative": "The model predicted a forecast bust probability of 65.8% (MEDIUM RISK). Features that increased the predicted bust risk were: valid_hour (+0.76), forecast_value (+0.35), district: Baramulla (+0.06). Features that mitigated/reduced the predicted bust risk were: district: Anantnag (-0.13), district: Jammu (-0.08), district: Srinagar (-0.02).",
+      "scientific_distinction_note": "Actual Forecast Error = Forecast - ERA5 = -8.87\u00b0C (magnitude 8.87\u00b0C). Predicted Bust Probability = 65.8%. Actual error reflects retrospective ground-truth verification; predicted bust risk reflects prospective model classification based strictly on issuance features."
+    },
+    {
+      "event_id": 33,
+      "district": "Baramulla",
+      "lead_hours": 24.0,
+      "lead_day": 2.0,
+      "initialization_time": "2026-09-15 00:00:00",
+      "valid_time": "2026-09-16 00:00:00",
+      "forecast_value_c": 10.98,
+      "reference_value_c": 19.23,
+      "actual_error_c": -8.25,
+      "actual_absolute_error_c": 8.25,
+      "empirical_bust_threshold_c": 7.68,
+      "actual_is_bust": 1,
+      "model_prediction": {
+        "bust_probability": 0.5536,
+        "predicted_class": 1,
+        "risk_level": "MEDIUM RISK",
+        "classification_threshold": 0.5,
+        "model_id": "LogisticRegression_BustClassifier"
+      },
+      "shap_summary": {
+        "base_value_log_odds": -0.2747,
+        "base_probability": 0.4318,
+        "sum_shap_values": 0.4899,
+        "final_log_odds": 0.2152,
+        "explanation_space": "log-odds (logit)"
+      },
+      "top_positive_features": [
+        {
+          "feature": "lead_hours",
+          "raw_value": 24.0,
+          "transformed_value": 2.177,
+          "shap_value": 1.0404,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 34.47
+        },
+        {
+          "feature": "forecast_value",
+          "raw_value": 10.98,
+          "transformed_value": -1.396,
+          "shap_value": 0.6698,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 22.19
+        },
+        {
+          "feature": "district: Anantnag",
+          "raw_value": "district=Baramulla",
+          "transformed_value": 0.0,
+          "shap_value": 0.044,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 1.46
+        }
+      ],
+      "top_negative_features": [
+        {
+          "feature": "valid_hour",
+          "raw_value": 0.0,
+          "transformed_value": -1.502,
+          "shap_value": -0.9774,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 32.38
+        },
+        {
+          "feature": "district: Baramulla",
+          "raw_value": "district=Baramulla",
+          "transformed_value": 1.0,
+          "shap_value": -0.1823,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 6.04
+        },
+        {
+          "feature": "district: Jammu",
+          "raw_value": "district=Baramulla",
+          "transformed_value": 0.0,
+          "shap_value": -0.0806,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 2.67
+        }
+      ],
+      "all_contributions": [
+        {
+          "feature": "lead_hours",
+          "raw_value": 24.0,
+          "transformed_value": 2.177,
+          "shap_value": 1.0404,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 34.47
+        },
+        {
+          "feature": "valid_hour",
+          "raw_value": 0.0,
+          "transformed_value": -1.502,
+          "shap_value": -0.9774,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 32.38
+        },
+        {
+          "feature": "forecast_value",
+          "raw_value": 10.98,
+          "transformed_value": -1.396,
+          "shap_value": 0.6698,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 22.19
+        },
+        {
+          "feature": "district: Baramulla",
+          "raw_value": "district=Baramulla",
+          "transformed_value": 1.0,
+          "shap_value": -0.1823,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 6.04
+        },
+        {
+          "feature": "district: Jammu",
+          "raw_value": "district=Baramulla",
+          "transformed_value": 0.0,
+          "shap_value": -0.0806,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 2.67
+        },
+        {
+          "feature": "district: Anantnag",
+          "raw_value": "district=Baramulla",
+          "transformed_value": 0.0,
+          "shap_value": 0.044,
+          "direction": "INCREASED_RISK",
+          "relative_contribution_pct": 1.46
+        },
+        {
+          "feature": "district: Srinagar",
+          "raw_value": "district=Baramulla",
+          "transformed_value": 0.0,
+          "shap_value": -0.0241,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 0.8
+        },
+        {
+          "feature": "lead_day",
+          "raw_value": 2.0,
+          "transformed_value": 1.0,
+          "shap_value": 0.0,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 0.0
+        },
+        {
+          "feature": "init_hour",
+          "raw_value": 0.0,
+          "transformed_value": 0.0,
+          "shap_value": 0.0,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 0.0
+        },
+        {
+          "feature": "valid_month",
+          "raw_value": 9.0,
+          "transformed_value": 0.0,
+          "shap_value": 0.0,
+          "direction": "DECREASED_RISK",
+          "relative_contribution_pct": 0.0
+        }
+      ],
+      "narrative": "The model predicted a forecast bust probability of 55.4% (MEDIUM RISK). Features that increased the predicted bust risk were: lead_hours (+1.04), forecast_value (+0.67), district: Anantnag (+0.04). Features that mitigated/reduced the predicted bust risk were: valid_hour (-0.98), district: Baramulla (-0.18), district: Jammu (-0.08).",
+      "scientific_distinction_note": "Actual Forecast Error = Forecast - ERA5 = -8.25\u00b0C (magnitude 8.25\u00b0C). Predicted Bust Probability = 55.4%. Actual error reflects retrospective ground-truth verification; predicted bust risk reflects prospective model classification based strictly on issuance features."
+    }
+  ],
+  "meteorological_audit": {
+    "audit_date": "2026-11-01",
+    "study_region": "Jammu & Kashmir",
+    "variables_audited": [
+      {
+        "variable": "relative_humidity",
+        "display_name": "Atmospheric Relative Humidity",
+        "units": "%",
+        "in_gfs_archive": false,
+        "in_era5_archive": false,
+        "in_processed_data": false,
+        "in_week5_model": false,
+        "required_source_key": "GFS: 'RH:2 m above ground' | ERA5: '2m_dewpoint_temperature' / 'relative_humidity'",
+        "audit_finding": "ABSENT from downloaded local dataset archive. Not used in Week 5 model.",
+        "scientific_rationale": "NOAA GFS index-filtered downloads and ECMWF CDSAPI queries in Weeks 1-2 requested strictly 2m temperature and precipitation to conserve network bandwidth for the pilot domain. Atmospheric moisture was not retrieved in raw Grib2/NetCDF files."
+      },
+      {
+        "variable": "wind_speed",
+        "display_name": "10-Metre Wind Speed",
+        "units": "m/s",
+        "in_gfs_archive": false,
+        "in_era5_archive": false,
+        "in_processed_data": false,
+        "in_week5_model": false,
+        "required_source_key": "GFS: 'UGRD:10 m above ground', 'VGRD:10 m above ground' | ERA5: '10m_u_component_of_wind', '10m_v_component_of_wind'",
+        "audit_finding": "ABSENT from downloaded local dataset archive. Not used in Week 5 model.",
+        "scientific_rationale": "Zonal (u) and meridional (v) 10m wind components were not included in the original GFS/ERA5 download pipelines. Documented as absent without fabricating synthetic observations."
+      },
+      {
+        "variable": "temperature_c",
+        "display_name": "2-Metre Air Temperature",
+        "units": "\u00b0C",
+        "in_gfs_archive": true,
+        "in_era5_archive": true,
+        "in_processed_data": true,
+        "in_week5_model": true,
+        "required_source_key": "GFS: 'TMP:2 m above ground' | ERA5: '2m_temperature'",
+        "audit_finding": "AVAILABLE and actively included in model as 'forecast_value'.",
+        "scientific_rationale": "Primary medium-range meteorological predictand verified across all 4 districts."
+      },
+      {
+        "variable": "precipitation_mm",
+        "display_name": "Surface Precipitation",
+        "units": "mm",
+        "in_gfs_archive": true,
+        "in_era5_archive": true,
+        "in_processed_data": true,
+        "in_week5_model": false,
+        "required_source_key": "GFS: 'APCP:surface' | ERA5: 'total_precipitation'",
+        "audit_finding": "AVAILABLE in processed datasets, but intentionally excluded from Week 5 model input schema.",
+        "scientific_rationale": "Excluded from Week 5 forecast-bust classifier to maintain single-variable focus on temperature bust events and avoid accumulation interval mismatches (3-hour vs 1-hour)."
+      }
+    ],
+    "humidity_available": false,
+    "wind_speed_available": false,
+    "exploratory_meteorological_analysis": {
+      "lead_time_relationship": {
+        "description": "Verification MAE increases monotonically with forecast horizon.",
+        "lead_hours": [
+          0.0,
+          3.0,
+          6.0,
+          9.0,
+          12.0,
+          15.0,
+          18.0,
+          21.0,
+          24.0,
+          27.0,
+          30.0
+        ],
+        "mean_abs_error": [
+          6.035,
+          5.623,
+          4.207,
+          3.248,
+          3.738,
+          7.428,
+          6.385,
+          5.713,
+          6.77,
+          6.868,
+          4.787
+        ],
+        "correlation": 0.168
+      },
+      "temperature_relationship": {
+        "description": "Cooler forecasts (mountainous locations) exhibit higher absolute error.",
+        "bins": [
+          "Cool (<15\u00b0C)",
+          "Mild (15-22\u00b0C)",
+          "Warm (>22\u00b0C)"
+        ],
+        "mean_abs_error": [
+          7.433,
+          6.049,
+          3.134
+        ],
+        "correlation": -0.8
+      },
+      "diurnal_relationship": {
+        "description": "Afternoon/evening forecasts (09:00 - 15:00 UTC) show higher error due to solar heating and convection.",
+        "valid_hours": [
+          0,
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21
+        ],
+        "mean_abs_error": [
+          6.402,
+          6.245,
+          4.497,
+          3.248,
+          3.738,
+          7.428,
+          6.385,
+          5.713
+        ]
+      }
+    },
+    "scientific_disclaimer": "SHAP values measure empirical feature attributions within the trained mathematical model, not physical atmospheric causality. Humidity and wind speed were not included in the model because they were not present in the downloaded local dataset archive."
+  },
+  "generated_figures": [
+    "outputs/week7/figures/shap_global_feature_importance.png",
+    "outputs/week7/figures/shap_beeswarm_summary.png",
+    "outputs/week7/figures/shap_grouped_feature_importance.png",
+    "outputs/week7/figures/meteorological_error_relationships.png",
+    "outputs/week7/figures/shap_waterfall_event_21_Baramulla_lead15h.png",
+    "outputs/week7/figures/shap_waterfall_event_32_Anantnag_lead24h.png",
+    "outputs/week7/figures/shap_waterfall_event_36_Anantnag_lead27h.png",
+    "outputs/week7/figures/shap_waterfall_event_20_Anantnag_lead15h.png",
+    "outputs/week7/figures/shap_waterfall_event_33_Baramulla_lead24h.png"
+  ],
+  "generated_tables": [
+    "outputs/week7/global_feature_importance.csv",
+    "outputs/week7/high_error_events_analyzed.csv",
+    "outputs/week7/meteorological_variable_audit.csv"
+  ]
+}

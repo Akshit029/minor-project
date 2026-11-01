@@ -10,6 +10,8 @@ import {
   BookOpen, 
   Layers,
   Database,
+  Sparkles,
+  Sliders,
   X
 } from 'lucide-react';
 
@@ -29,6 +31,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { to: '/reliability', label: 'Forecast Reliability', icon: Activity },
     { to: '/district-analysis', label: 'District Analysis', icon: MapPin },
     { to: '/forecast-bust', label: 'Forecast Bust', icon: AlertOctagon },
+    { to: '/feature-influence', label: 'Feature Influence (SHAP)', icon: Sliders },
+    { to: '/ai-assistant', label: 'AI Assistant', icon: Sparkles },
     { 
       to: '/alerts', 
       label: 'Alerts', 
