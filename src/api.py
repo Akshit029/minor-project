@@ -10,9 +10,11 @@ Provides:
 
 import os
 import sys
+import json
 import logging
 from typing import Dict, List, Optional, Any
 from pathlib import Path
+import pandas as pd
 
 from fastapi import FastAPI, HTTPException, Request, Query
 from fastapi.middleware.cors import CORSMiddleware
@@ -35,6 +37,17 @@ from src.agentic_ai import (
     get_feature_influence_impl,
     audit_humidity_wind_impl,
     VALID_DISTRICTS
+)
+from src.alerting import (
+    ForecastBustAlertEngine,
+    AlertStorageManager,
+    get_configured_alert_threshold,
+    run_week8_alerting,
+    determine_alert_severity
+)
+from src.uncertainty_analysis import (
+    run_week8_uncertainty_analysis,
+    DISTRICT_METADATA
 )
 
 logging.basicConfig(
@@ -135,6 +148,21 @@ class LocalExplanationRequest(BaseModel):
     validMonth: int = Field(default=9, ge=1, le=12, description="Target calendar month")
 
 
+class AlertStatusUpdateRequest(BaseModel):
+    status: str = Field(..., description="Lifecycle status: Active, Acknowledged, Dismissed, Investigating, Resolved")
+
+
+class AlertEvaluationRequest(BaseModel):
+    threshold: Optional[float] = Field(default=None, ge=0.0, le=1.0, description="Optional override bust probability threshold")
+
+
+class TestAlertRequest(BaseModel):
+    district: str = Field(default="Srinagar", description="Target district")
+    leadDay: int = Field(default=3, ge=1, le=10, description="Forecast lead day")
+    bustProbability: float = Field(default=75.0, ge=0.0, le=100.0, description="Bust probability (0 to 100)")
+    explanation: Optional[str] = Field(default=None, description="Optional custom alert message")
+
+
 # ============================================================================
 # API ENDPOINTS
 # ============================================================================
@@ -146,16 +174,23 @@ async def health_check():
     w4_table = PROJECT_ROOT / "outputs" / "week4" / "reliability_table.csv"
     w5_model = PROJECT_ROOT / "outputs" / "week5" / "trained_model_pipeline.joblib"
     w7_meta = PROJECT_ROOT / "outputs" / "week7" / "shap_analysis_metadata.json"
+    w8_alerts = PROJECT_ROOT / "outputs" / "week8" / "alerts.json"
+    w8_geojson = PROJECT_ROOT / "outputs" / "week8" / "regional_reliability_geojson.json"
+    w8_uncert = PROJECT_ROOT / "outputs" / "week8" / "lead_day_uncertainty_metrics.csv"
 
     return {
         "status": "operational",
-        "service": "Weather Reliability AI Service (Weeks 1-7)",
+        "service": "Weather Reliability & Uncertainty AI Service (Weeks 1-9)",
         "gemini_api_key_configured": has_gemini,
         "configured_model": os.getenv("LLM_MODEL", "gemini-2.0-flash"),
+        "alert_threshold": get_configured_alert_threshold(),
         "artifacts": {
             "week4_reliability_table": w4_table.exists(),
             "week5_model_pipeline": w5_model.exists(),
-            "week7_shap_metadata": w7_meta.exists()
+            "week7_shap_metadata": w7_meta.exists(),
+            "week8_alerts_store": w8_alerts.exists(),
+            "week8_regional_geojson": w8_geojson.exists(),
+            "week8_lead_day_uncertainty": w8_uncert.exists()
         },
         "supported_districts": VALID_DISTRICTS
     }
@@ -303,6 +338,184 @@ async def explainability_meteorological_endpoint():
     """Retrieve meteorological variable audit and exploratory analysis findings."""
     res = audit_humidity_wind_impl()
     return res
+
+
+# ============================================================================
+# WEEK 8 ALERTING & UNCERTAINTY ENDPOINTS
+# ============================================================================
+
+@app.get("/api/alerts")
+async def get_alerts_endpoint(
+    district: Optional[str] = Query(None, description="Filter by district (Srinagar, Jammu, Anantnag, Baramulla)"),
+    status: Optional[str] = Query(None, description="Filter by status (Active, Acknowledged, Dismissed)"),
+    severity: Optional[str] = Query(None, description="Filter by severity (critical, high, moderate, low)"),
+    min_probability: Optional[float] = Query(None, description="Filter by minimum bust probability percentage (e.g. 60.0)")
+):
+    """
+    Retrieve stored forecast-bust alerts with optional filtering.
+    Directly powers the frontend Alerts review interface.
+    """
+    storage = AlertStorageManager()
+    alerts = storage.filter_alerts(
+        district=district,
+        status=status,
+        severity=severity,
+        min_probability=min_probability
+    )
+    return alerts
+
+
+@app.post("/api/alerts/evaluate")
+async def evaluate_alerts_endpoint(payload: Optional[AlertEvaluationRequest] = None):
+    """
+    Trigger automated forecast-bust alert evaluation against current forecasts.
+    Evaluates predictions with the configured or requested bust probability threshold.
+    """
+    try:
+        custom_thresh = payload.threshold if payload else None
+        res = run_week8_alerting()
+        return {
+            "success": True,
+            "message": f"Alert evaluation executed. Triggered {res.get('alerts_generated', 0)} alerts.",
+            "threshold": res.get("alert_threshold"),
+            "evaluatedForecasts": res.get("evaluated_forecasts", 0),
+            "alertsGenerated": res.get("alerts_generated", 0),
+            "alerts": res.get("alerts", [])
+        }
+    except Exception as e:
+        logger.error("Error evaluating forecast alerts: %s", e)
+        raise HTTPException(status_code=500, detail=f"Alert evaluation failed: {str(e)}")
+
+
+@app.patch("/api/alerts/{alert_id}/status")
+async def update_alert_status_endpoint(alert_id: str, payload: AlertStatusUpdateRequest):
+    """
+    Update lifecycle status of an alert (e.g., Active -> Acknowledged / Dismissed).
+    Persists change to persistent JSON storage.
+    """
+    storage = AlertStorageManager()
+    try:
+        updated = storage.update_status(alert_id, payload.status)
+        if updated is None:
+            raise HTTPException(status_code=404, detail=f"Alert with ID '{alert_id}' not found.")
+        return {
+            "success": True,
+            "alert": updated,
+            "message": f"Alert {alert_id} status updated to {updated['status']}."
+        }
+    except ValueError as val_err:
+        raise HTTPException(status_code=400, detail=str(val_err))
+    except Exception as e:
+        logger.error("Failed to update status for alert %s: %s", alert_id, e)
+        raise HTTPException(status_code=500, detail=f"Failed to update alert status: {str(e)}")
+
+
+@app.post("/api/alerts/test-trigger")
+async def trigger_test_alert_endpoint(payload: TestAlertRequest):
+    """
+    Trigger a controlled test alert to verify notification adapters and frontend reactivity.
+    Does not corrupt historical verification metrics.
+    """
+    storage = AlertStorageManager()
+    engine = ForecastBustAlertEngine()
+
+    now_iso = pd.Timestamp.now(tz="UTC").strftime("%Y-%m-%d %H:%M UTC")
+    alert_id = f"test-{payload.district.lower()[:3]}-{pd.Timestamp.now().strftime('%H%M%S')}"
+    prob = float(payload.bustProbability)
+    severity = determine_alert_severity(prob / 100.0)
+
+    test_alert = {
+        "id": alert_id,
+        "severity": severity,
+        "district": payload.district,
+        "leadDay": payload.leadDay,
+        "leadHours": payload.leadDay * 24,
+        "alertType": "potential_forecast_bust",
+        "reliability": 0.50,
+        "bustProbability": prob,
+        "title": f"[TEST] Forecast Bust Warning: {payload.district} (Day {payload.leadDay})",
+        "explanation": payload.explanation or f"Controlled test alert verifying automated notification delivery for {payload.district}.",
+        "timestamp": now_iso,
+        "initializationTime": now_iso,
+        "validTime": now_iso,
+        "status": "Active",
+        "variable": "temperature_c",
+        "forecastValue": 25.0,
+        "thresholdValue": engine.threshold * 100.0,
+        "modelUsed": "TestTriggerAdapter",
+        "created_at": pd.Timestamp.now(tz="UTC").isoformat()
+    }
+
+    engine.dispatcher.dispatch(test_alert)
+    return {
+        "success": True,
+        "message": "Test alert successfully created and dispatched.",
+        "alert": test_alert
+    }
+
+
+@app.get("/api/reliability/regional-map")
+async def regional_reliability_map_endpoint():
+    """
+    Retrieve enriched GeoJSON feature collection of Jammu and Kashmir districts
+    with embedded empirical reliability scores, MAE, RMSE, and status color codes.
+    """
+    geojson_path = PROJECT_ROOT / "outputs" / "week8" / "regional_reliability_geojson.json"
+    if not geojson_path.exists():
+        # Generate on the fly if not already cached
+        run_week8_uncertainty_analysis()
+
+    if geojson_path.exists():
+        try:
+            with open(geojson_path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            logger.error("Error reading regional GeoJSON: %s", e)
+
+    raise HTTPException(status_code=500, detail="Regional reliability GeoJSON unavailable.")
+
+
+@app.get("/api/uncertainty/lead-days")
+async def lead_day_uncertainty_endpoint(
+    district: Optional[str] = Query(None, description="Optional district filter")
+):
+    """
+    Retrieve 1 to 10 day forecast uncertainty metrics:
+    Shows MAE, RMSE, Bias, Median AE, IQR, Standard Error, and empirical reliability.
+    Explicitly identifies observed vs. unobserved forecast horizons.
+    """
+    reg_csv = PROJECT_ROOT / "outputs" / "week8" / "lead_day_uncertainty_metrics.csv"
+    dist_csv = PROJECT_ROOT / "outputs" / "week8" / "district_lead_day_uncertainty.csv"
+    meta_json = PROJECT_ROOT / "outputs" / "week8" / "uncertainty_analysis_metadata.json"
+
+    if not reg_csv.exists() or not dist_csv.exists():
+        run_week8_uncertainty_analysis()
+
+    try:
+        reg_df = pd.read_csv(reg_csv)
+        dist_df = pd.read_csv(dist_csv)
+        metadata = {}
+        if meta_json.exists():
+            with open(meta_json, "r", encoding="utf-8") as f:
+                metadata = json.load(f)
+
+        def sanitize_records(records: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+            return [{k: (None if pd.isna(v) else v) for k, v in row.items()} for row in records]
+
+        if district and district.lower() != "all":
+            dist_data = sanitize_records(dist_df[dist_df["district"].str.lower() == district.lower()].to_dict(orient="records"))
+        else:
+            dist_data = sanitize_records(dist_df.to_dict(orient="records"))
+
+        return {
+            "success": True,
+            "metadata": metadata,
+            "regionalLeadDayMetrics": sanitize_records(reg_df.to_dict(orient="records")),
+            "districtMetrics": dist_data
+        }
+    except Exception as e:
+        logger.error("Error loading uncertainty data: %s", e)
+        raise HTTPException(status_code=500, detail=f"Failed to load uncertainty data: {str(e)}")
 
 
 if __name__ == "__main__":

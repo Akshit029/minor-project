@@ -59,6 +59,8 @@ from src.visualize_week4 import generate_all_week4_visualizations
 from src.forecast_bust import run_week5_forecast_bust
 from src.visualize_week5 import generate_all_week5_visualizations
 from src.explainability import run_week7_explainability
+from src.alerting import run_week8_alerting
+from src.uncertainty_analysis import run_week8_uncertainty_analysis
 from src.generate_reports import generate_all_reports
 
 logging.basicConfig(
@@ -90,6 +92,9 @@ def ensure_directories(config: dict):
         config["output_dirs"].get("week5_figures", "outputs/week5/figures"),
         config["output_dirs"].get("week7", "outputs/week7"),
         config["output_dirs"].get("week7_figures", "outputs/week7/figures"),
+        config["output_dirs"].get("week8", "outputs/week8"),
+        config["output_dirs"].get("week8_figures", "outputs/week8/figures"),
+        config["output_dirs"].get("week9", "outputs/week9"),
     ]
     for d in dirs:
         os.makedirs(d, exist_ok=True)
@@ -329,6 +334,60 @@ def run_pipeline(
     else:
         stage_status["15_week7_explainability"] = "SKIPPED"
 
+    # 16. Week 8: Regional Reliability & Uncertainty Analysis (1 to 10 Days)
+    if stage in ["all", "week8", "uncertainty", "pipeline", "e2e"]:
+        print("\n[16/18] Running Week 8 Regional Reliability & Uncertainty Analysis (1 to 10 Days)...")
+        try:
+            w8_uncert = run_week8_uncertainty_analysis(config_path)
+            n_obs = len(w8_uncert.get("metadata", {}).get("empirically_verified_days", []))
+            print(f"-> Week 8 Uncertainty completed: {n_obs} verified horizons quantified, GeoJSON and figures generated.")
+            stage_status["16_week8_uncertainty"] = f"COMPLETED ({n_obs} verified days)"
+        except Exception as e:
+            print(f"[ERROR in Week 8 Uncertainty Analysis]: {e}")
+            stage_status["16_week8_uncertainty"] = f"FAILED: {e}"
+            sys.exit(1)
+    else:
+        stage_status["16_week8_uncertainty"] = "SKIPPED"
+
+    # 17. Week 8: Automated Forecast-Bust Alert Generation & Storage
+    if stage in ["all", "week8", "alerting", "pipeline", "e2e"]:
+        print("\n[17/18] Running Week 8 Automated Forecast-Bust Alert Evaluation & Notification Pipeline...")
+        try:
+            w8_alert = run_week8_alerting(config_path)
+            n_alerts = w8_alert.get("alerts_generated", 0)
+            print(f"-> Week 8 Alerting completed: {n_alerts} alerts triggered (Threshold = {w8_alert.get('alert_threshold', 0.60):.2f}).")
+            stage_status["17_week8_alerting"] = f"COMPLETED ({n_alerts} alerts)"
+        except Exception as e:
+            print(f"[ERROR in Week 8 Alerting]: {e}")
+            stage_status["17_week8_alerting"] = f"FAILED: {e}"
+            sys.exit(1)
+    else:
+        stage_status["17_week8_alerting"] = "SKIPPED"
+
+    # 18. Week 9: System Integration & Integrity Health Check
+    if stage in ["all", "week9", "pipeline", "e2e"]:
+        print("\n[18/18] Verifying Week 9 System Pipeline Integration & Artifact Integrity...")
+        try:
+            w3_file = Path("outputs/week3/matched_validation_dataset.csv").exists()
+            w4_file = Path("outputs/week4/reliability_table.csv").exists()
+            w5_file = Path("outputs/week5/trained_model_pipeline.joblib").exists()
+            w7_file = Path("outputs/week7/shap_analysis_metadata.json").exists()
+            w8_alerts = Path("outputs/week8/alerts.json").exists()
+            w8_geo = Path("outputs/week8/regional_reliability_geojson.json").exists()
+
+            all_ok = all([w3_file, w4_file, w5_file, w7_file, w8_alerts, w8_geo])
+            if all_ok:
+                print("-> All pipeline artifacts verified intact across Weeks 1 through 8.")
+                stage_status["18_week9_integration"] = "COMPLETED (All Artifacts Verified)"
+            else:
+                print("-> Warning: Some intermediate artifacts were not found.")
+                stage_status["18_week9_integration"] = "PARTIAL"
+        except Exception as e:
+            print(f"[ERROR in Week 9 Integration]: {e}")
+            stage_status["18_week9_integration"] = f"FAILED: {e}"
+    else:
+        stage_status["18_week9_integration"] = "SKIPPED"
+
     # Reports Compilation
     if stage in ["all", "reports"]:
         print("\n[+] Dynamically Compiling All Scientific Markdown Reports...")
@@ -352,14 +411,15 @@ def run_pipeline(
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Weather Forecast Reliability & Uncertainty Pipeline (Weeks 1-7)")
+    parser = argparse.ArgumentParser(description="Weather Forecast Reliability & Uncertainty Pipeline (Weeks 1-9)")
     parser.add_argument("--config", default="config.yaml", help="Path to config.yaml")
     parser.add_argument("--test", action="store_true", help="Execute minimal fast test mode")
     parser.add_argument("--skip-download", action="store_true", help="Skip downloading fresh data and reuse local files")
     parser.add_argument(
         "--stage", default="all",
         choices=["all", "download", "preprocess", "quality", "features", "anomaly", "validate",
-                 "week3", "week4", "week5", "visualize", "week7", "explainability", "shap", "reports"],
+                 "week3", "week4", "week5", "visualize", "week7", "explainability", "shap",
+                 "week8", "alerting", "uncertainty", "week9", "pipeline", "e2e", "reports"],
         help="Specify individual stage to run or 'all'"
     )
     args = parser.parse_args()

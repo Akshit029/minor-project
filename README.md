@@ -28,12 +28,17 @@
    - [Week 4: Spatiotemporal Modelling for Reliability Scoring](#week-4-spatiotemporal-modelling-for-reliability-scoring)
    - [Week 5: Machine-Learning Forecast-Bust Classifier](#week-5-machine-learning-forecast-bust-classifier)
    - [Week 6: Agentic AI Workflow Integration & Dashboard Assistant](#week-6-agentic-ai-workflow-integration--dashboard-assistant)
-8. [Interpretation of Metrics & Scores](#8-interpretation-of-metrics--scores)
-9. [College Review Demonstration Guide](#9-college-review-demonstration-guide)
-10. [Automated Testing Suite](#10-automated-testing-suite)
-11. [Directory Structure & Saved Artifacts](#11-directory-structure--saved-artifacts)
-12. [Scientific Assumptions & Operational Limitations](#12-scientific-assumptions--operational-limitations)
-13. [Verification Checklist](#13-verification-checklist)
+   - [Week 7: SHAP Feature Influence & Explanatory AI Analysis](#week-7-shap-feature-influence--explanatory-ai-analysis)
+   - [Week 8: Regional Reliability Maps & Automated Alerting System](#week-8-regional-reliability-maps--automated-alerting-system)
+   - [Week 9: Unified Pipeline Orchestration, Docker & Deployment](#week-9-unified-pipeline-orchestration-docker--deployment)
+8. [Docker Containerization Guide](#8-docker-containerization-guide)
+9. [Cloud Deployment Guide](#9-cloud-deployment-guide)
+10. [Interpretation of Metrics & Scores](#10-interpretation-of-metrics--scores)
+11. [College Review Demonstration Guide](#11-college-review-demonstration-guide)
+12. [Automated Testing Suite (91 Tests)](#12-automated-testing-suite-91-tests)
+13. [Directory Structure & Saved Artifacts](#13-directory-structure--saved-artifacts)
+14. [Scientific Assumptions & Operational Limitations](#14-scientific-assumptions--operational-limitations)
+15. [Verification Checklist](#15-verification-checklist)
 
 ---
 
@@ -46,7 +51,10 @@ This research project investigates the spatiotemporal reliability, forecast skil
 - **Week 3:** Matched forecast-reference error dataset creation, lead-day error metrics (lead days 1–10), district-wise error distributions, and historical mean-bias correction with district-to-regional fallback.
 - **Week 4:** Mathematical formulation of an empirical spatiotemporal reliability score $R \in [0, 1]$, sample confidence factor $C$, temporal leakage avoidance, and sensitivity analysis across error tolerance scales and smoothing parameters.
 - **Week 5:** Formulation of empirical training-derived forecast-bust labels, strictly leakage-free feature engineering from forecast issuance parameters, chronological train/validation/test evaluation, baseline Logistic Regression and Random Forest classifiers, precision-recall analysis, model serialization (`.joblib`), and a production inference API.
-- **Week 6:** Orchestration of scientific verification and machine-learning modules through an **Agentic AI workflow** using LangChain and Google Gemini. Development of specialized scientific tools (Empirical Reliability Lookup, Forecast-Bust Inference with strict schema validation, and Meteorological Result Explanation) integrated natively into an interactive React dashboard with an automated demonstration interface and deterministic offline fallback.
+- **Week 6:** Orchestration of scientific verification and machine-learning modules through an **Agentic AI workflow** using LangChain and Google Gemini with deterministic offline fallback.
+- **Week 7:** Integration of the **SHAP (SHapley Additive exPlanations)** library with the Week 5 model pipeline. Exact analytical log-odds feature attributions, high-error event analysis, domain concept grouping, and meteorological data integrity governance.
+- **Week 8:** **Interactive Regional Reliability Maps & Automated Alerting System:** GeoJSON-based interactive spatial choropleths and markers across J&K, automated forecast-bust alert engine with configurable probability threshold ($\theta_{\text{alert}} = 0.60$), idempotent deduplication, persistent JSON storage, safe multi-channel notification adapters, and empirical 1–10 day uncertainty analysis.
+- **Week 9:** **Unified Pipeline Orchestration, Docker Containerization & Cloud Deployment:** Full multi-stage execution pipeline connecting Stages 1–18 in `src/run_pipeline.py`, multi-container Docker and Docker Compose orchestration (FastAPI backend + Nginx React frontend), comprehensive health check monitoring, and deployment guides for Linux VM, Render, and Railway.
 
 
 ---
@@ -460,13 +468,13 @@ Week 7 integrates explainable AI (XAI) into the operational medium-range forecas
 
 ---
 
-## 10. Automated Testing Suite
+## 12. Automated Testing Suite (91 Tests)
 
-The repository contains 66 comprehensive automated unit tests across 8 test modules covering all mathematical formulas, sign conventions, leakage guards, fallback hierarchies, and edge cases.
+The repository contains 91 comprehensive automated unit, integration, and end-to-end tests across 10 test modules covering all mathematical formulas, sign conventions, leakage guards, fallback hierarchies, alerting, containerization, and edge cases.
 
 ```bash
 # Run the complete test suite
-pytest -v
+./.venv/bin/pytest -v
 ```
 
 ### Test Coverage Summary:
@@ -476,7 +484,7 @@ pytest -v
 - `tests/test_week3.py`: Known-value MAE/RMSE/Bias calculation, positive bias sign convention, lead-day binning, timestamp matching, variable availability checks, leakage-safe historical bias correction.
 - `tests/test_week4.py`: Reliability score bounds $[0, 1]$, zero-error behavior, monotonic error decay, sample confidence factor growth, rejection of invalid scales/parameters, insufficient sample policy (returns None).
 - `tests/test_week5.py`: Training-derived bust threshold calculation, leakage-free feature verification, chronological train/val/test splitting, model training, evaluation metrics, model serialization, and `ForecastBustPredictor` schema validation.
-- `tests/test_week6_agentic_ai.py`: Unit and integration tests for Week 6:
+- `tests/test_week6_agentic_ai.py`: Unit and integration tests for Week 6 (20 tests):
   - Reliability tool lookups (valid, held-out, out-of-bounds, invalid district rejection).
   - Forecast-bust tool inference, strict schema validation for missing features, no fabrication.
   - Scientific explanation distinctions, mathematical definitions, and error sign conventions.
@@ -495,6 +503,19 @@ pytest -v
   - FastAPI explainability endpoints (`/api/explainability/global`, `/api/explainability/events`, `/api/explainability/local`, `/api/explainability/meteorological`).
   - Error and edge case handling for missing artifacts and schemas.
   - Agentic AI natural language responses to Week 7 explainability questions.
+- `tests/test_week8_alerting.py`: Unit and integration tests for Week 8 (17 tests):
+  - Idempotent alert hashing (`generate_alert_hash`) preventing duplicate alerts.
+  - Severity classification thresholds (`critical`, `high`, `moderate`, `low`).
+  - Persistent alert storage (`AlertStorageManager` save, load, update status lifecycle).
+  - Multi-channel notification adapters (Logging, In-App, safe Email credential fallback).
+  - Multi-horizon uncertainty quantification (Days 1–2 verified vs Days 3–10 unobserved).
+  - Regional reliability GeoJSON building and schema validation.
+  - Week 8 FastAPI endpoints (`GET /api/alerts`, `POST /api/alerts/evaluate`, `PATCH /api/alerts/{id}/status`, `POST /api/alerts/test-trigger`, `GET /api/reliability/regional-map`, `GET /api/uncertainty/lead-days`).
+- `tests/test_week9_pipeline.py`: Unit and integration tests for Week 9 (8 tests):
+  - Full end-to-end data-to-alert execution workflow.
+  - Health check endpoint `/api/health` multi-week artifact status verification.
+  - Pipeline orchestration pre-flight checks and stage execution CLI (`--stage week8`, `--stage week9`).
+  - Docker containerization configuration validation (`Dockerfile`, `frontend/Dockerfile`, `docker-compose.yml`, `.env.example`).
 
 ---
 

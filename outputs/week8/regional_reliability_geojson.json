@@ -1,0 +1,250 @@
+{
+  "type": "FeatureCollection",
+  "name": "JK_Regional_Reliability_Map",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "Jammu",
+      "properties": {
+        "district": "Jammu",
+        "division": "Jammu Division",
+        "center_lat": 32.7266,
+        "center_lon": 74.857,
+        "elevation_meters": 327,
+        "terrain_type": "Sub-tropical Shivalik Foothills & Outer Plains",
+        "description": "Winter capital of Jammu and Kashmir, low-elevation plain terrain with minimal snow.",
+        "status_label": "Highest Reliability",
+        "color_hex": "#059669",
+        "uncertainty_class": "Low",
+        "day1_reliability": 0.083,
+        "day1_mae": 3.355,
+        "day1_rmse": 3.68,
+        "day1_bias": 3.355,
+        "day1_sample_count": 8,
+        "day2_reliability": 0.1042,
+        "day2_mae": 1.59,
+        "metadata": {
+          "lat": 32.7266,
+          "lon": 74.857,
+          "elevation_meters": 327,
+          "terrain_type": "Sub-tropical Shivalik Foothills & Outer Plains",
+          "division": "Jammu Division"
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              74.68,
+              32.6
+            ],
+            [
+              75.02,
+              32.58
+            ],
+            [
+              75.12,
+              32.82
+            ],
+            [
+              74.9,
+              32.9
+            ],
+            [
+              74.72,
+              32.8
+            ],
+            [
+              74.68,
+              32.6
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "Srinagar",
+      "properties": {
+        "district": "Srinagar",
+        "division": "Kashmir Valley Division",
+        "center_lat": 34.0837,
+        "center_lon": 74.7973,
+        "elevation_meters": 1585,
+        "terrain_type": "Central Intermontane Valley Basin",
+        "description": "Summer capital of Jammu and Kashmir, central valley surrounded by the Zabarwan and Pir Panjal ranges.",
+        "status_label": "Moderate Reliability",
+        "color_hex": "#d97706",
+        "uncertainty_class": "Moderate",
+        "day1_reliability": 0.0385,
+        "day1_mae": 4.893,
+        "day1_rmse": 5.299,
+        "day1_bias": -4.893,
+        "day1_sample_count": 8,
+        "day2_reliability": 0.0061,
+        "day2_mae": 7.28,
+        "metadata": {
+          "lat": 34.0837,
+          "lon": 74.7973,
+          "elevation_meters": 1585,
+          "terrain_type": "Central Intermontane Valley Basin",
+          "division": "Kashmir Valley Division"
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              74.68,
+              33.98
+            ],
+            [
+              74.92,
+              34.0
+            ],
+            [
+              74.96,
+              34.16
+            ],
+            [
+              74.8,
+              34.2
+            ],
+            [
+              74.7,
+              34.12
+            ],
+            [
+              74.68,
+              33.98
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "Anantnag",
+      "properties": {
+        "district": "Anantnag",
+        "division": "Kashmir Valley Division",
+        "center_lat": 33.7311,
+        "center_lon": 75.1487,
+        "elevation_meters": 1600,
+        "terrain_type": "South Kashmir Valley & Pir Panjal Windward Slopes",
+        "description": "Southern gateway of Kashmir Valley, prone to orographic precipitation and cloud trapped along Pir Panjal.",
+        "status_label": "High Uncertainty",
+        "color_hex": "#dc2626",
+        "uncertainty_class": "Elevated",
+        "day1_reliability": 0.0179,
+        "day1_mae": 6.42,
+        "day1_rmse": 6.63,
+        "day1_bias": -6.42,
+        "day1_sample_count": 8,
+        "day2_reliability": 0.0037,
+        "day2_mae": 8.29,
+        "metadata": {
+          "lat": 33.7311,
+          "lon": 75.1487,
+          "elevation_meters": 1600,
+          "terrain_type": "South Kashmir Valley & Pir Panjal Windward Slopes",
+          "division": "Kashmir Valley Division"
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              75.0,
+              33.6
+            ],
+            [
+              75.32,
+              33.58
+            ],
+            [
+              75.38,
+              33.85
+            ],
+            [
+              75.16,
+              33.88
+            ],
+            [
+              75.02,
+              33.72
+            ],
+            [
+              75.0,
+              33.6
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "Baramulla",
+      "properties": {
+        "district": "Baramulla",
+        "division": "Kashmir Valley Division",
+        "center_lat": 34.209,
+        "center_lon": 74.3429,
+        "elevation_meters": 1593,
+        "terrain_type": "North Kashmir Gorge & Kazinag Mountain Pass",
+        "description": "Northern valley district along the Jhelum river gorge with high cold-air pooling and complex microclimates.",
+        "status_label": "High Uncertainty",
+        "color_hex": "#dc2626",
+        "uncertainty_class": "Elevated",
+        "day1_reliability": 0.0171,
+        "day1_mae": 6.52,
+        "day1_rmse": 6.735,
+        "day1_bias": -6.52,
+        "day1_sample_count": 8,
+        "day2_reliability": 0.0057,
+        "day2_mae": 7.407,
+        "metadata": {
+          "lat": 34.209,
+          "lon": 74.3429,
+          "elevation_meters": 1593,
+          "terrain_type": "North Kashmir Gorge & Kazinag Mountain Pass",
+          "division": "Kashmir Valley Division"
+        }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              74.18,
+              34.1
+            ],
+            [
+              74.48,
+              34.12
+            ],
+            [
+              74.54,
+              34.34
+            ],
+            [
+              74.26,
+              34.38
+            ],
+            [
+              74.14,
+              34.22
+            ],
+            [
+              74.18,
+              34.1
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

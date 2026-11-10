@@ -3,7 +3,7 @@ import { WeatherApi } from '../services/api';
 import { Card } from '../components/common/Card';
 import { Badge } from '../components/common/Badge';
 import { AlertModal } from '../components/alerts/AlertModal';
-import type { AlertItem, AlertSeverity, AlertType, DistrictName } from '../types/weather';
+import type { AlertItem, AlertSeverity, DistrictName } from '../types/weather';
 import { APP_CONFIG } from '../data/config';
 import { 
   Bell, 
@@ -15,13 +15,19 @@ import {
   CheckCircle2, 
   Info,
   Clock,
-  Eye
+  Eye,
+  RefreshCw,
+  Check,
+  XCircle,
+  Sliders
 } from 'lucide-react';
 
 export const AlertsPage: React.FC = () => {
   const [alerts, setAlerts] = useState<AlertItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [evaluating, setEvaluating] = useState(false);
   const [selectedAlert, setSelectedAlert] = useState<AlertItem | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Filters state
   const [searchQuery, setSearchQuery] = useState('');
@@ -33,12 +39,51 @@ export const AlertsPage: React.FC = () => {
   const [sortField, setSortField] = useState<'timestamp' | 'leadDay' | 'bustProbability' | 'reliability'>('bustProbability');
   const [sortAsc, setSortAsc] = useState(false);
 
-  useEffect(() => {
+  const fetchAlerts = () => {
+    setLoading(true);
     WeatherApi.getAlerts().then((res) => {
       setAlerts(res);
       setLoading(false);
     });
+  };
+
+  useEffect(() => {
+    fetchAlerts();
   }, []);
+
+  const handleEvaluateAlerts = async () => {
+    setEvaluating(true);
+    try {
+      const res = await WeatherApi.evaluateAlerts();
+      if (res.alerts && res.alerts.length > 0) {
+        setAlerts(res.alerts);
+      } else {
+        await fetchAlerts();
+      }
+      setToastMessage(res.message || 'Alert threshold evaluation completed successfully.');
+      setTimeout(() => setToastMessage(null), 4000);
+    } catch (err: any) {
+      setToastMessage(`Evaluation failed: ${err.message}`);
+      setTimeout(() => setToastMessage(null), 4000);
+    } finally {
+      setEvaluating(false);
+    }
+  };
+
+  const handleStatusChange = async (alertId: string, newStatus: AlertItem['status']) => {
+    // Optimistic UI update
+    setAlerts((prev) =>
+      prev.map((a) => (a.id === alertId ? { ...a, status: newStatus } : a))
+    );
+    try {
+      await WeatherApi.updateAlertStatus(alertId, newStatus);
+      setToastMessage(`Alert ${alertId} updated to ${newStatus}.`);
+      setTimeout(() => setToastMessage(null), 3000);
+    } catch {
+      // Revert if API fails
+      fetchAlerts();
+    }
+  };
 
   const filteredAlerts = useMemo(() => {
     return alerts
@@ -108,6 +153,10 @@ export const AlertsPage: React.FC = () => {
         return <Badge variant="rose" size="xs">ACTIVE</Badge>;
       case 'Investigating':
         return <Badge variant="amber" size="xs">INVESTIGATING</Badge>;
+      case 'Acknowledged':
+        return <Badge variant="blue" size="xs">ACKNOWLEDGED</Badge>;
+      case 'Dismissed':
+        return <Badge variant="slate" size="xs">DISMISSED</Badge>;
       case 'Resolved':
       default:
         return <Badge variant="emerald" size="xs">RESOLVED</Badge>;
@@ -145,13 +194,32 @@ export const AlertsPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="flex items-center gap-3 text-xs">
-            <span className="text-slate-500">Active Alerts:</span>
+          <div className="flex flex-wrap items-center gap-2.5 text-xs">
+            <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 font-semibold border border-slate-200 flex items-center gap-1.5">
+              <Sliders className="w-3.5 h-3.5 text-slate-500" />
+              Threshold: 60.0%
+            </span>
             <span className="px-2.5 py-1 rounded-full bg-rose-50 text-rose-700 font-bold border border-rose-200">
               {alerts.filter(a => a.status === 'Active').length} Active
             </span>
+            <button
+              onClick={handleEvaluateAlerts}
+              disabled={evaluating}
+              className="px-3 py-1.5 rounded-lg bg-slate-900 text-white font-medium hover:bg-slate-800 transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50 shadow-xs"
+              title="Evaluate current forecasts against bust probability threshold"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${evaluating ? 'animate-spin' : ''}`} />
+              <span>{evaluating ? 'Evaluating...' : 'Run Automated Alert Engine'}</span>
+            </button>
           </div>
         </div>
+
+        {toastMessage && (
+          <div className="p-2.5 rounded-lg bg-indigo-50 border border-indigo-200 text-indigo-900 text-xs flex items-center gap-2 animate-fade-in">
+            <Info className="w-4 h-4 text-indigo-600 shrink-0" />
+            <span>{toastMessage}</span>
+          </div>
+        )}
       </div>
 
       {/* Filter and Search Bar */}
@@ -227,6 +295,8 @@ export const AlertsPage: React.FC = () => {
               <option value="all">All Statuses</option>
               <option value="Active">Active</option>
               <option value="Investigating">Investigating</option>
+              <option value="Acknowledged">Acknowledged</option>
+              <option value="Dismissed">Dismissed</option>
               <option value="Resolved">Resolved</option>
             </select>
           </div>
@@ -351,14 +421,44 @@ export const AlertsPage: React.FC = () => {
                       {getStatusBadge(alert.status)}
                     </td>
                     <td className="py-3 px-4 text-right whitespace-nowrap">
-                      <button
-                        onClick={() => setSelectedAlert(alert)}
-                        className="p-1.5 rounded-lg border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors inline-flex items-center gap-1 cursor-pointer"
-                        title="View Full Diagnostics"
-                      >
-                        <Eye className="w-3.5 h-3.5" />
-                        <span className="text-[11px] font-semibold">Inspect</span>
-                      </button>
+                      <div className="flex items-center justify-end gap-1.5">
+                        {alert.status === 'Active' ? (
+                          <>
+                            <button
+                              onClick={() => handleStatusChange(alert.id, 'Acknowledged')}
+                              className="p-1.5 rounded-lg border border-slate-200 text-emerald-700 bg-emerald-50 hover:bg-emerald-100 transition-colors inline-flex items-center gap-1 cursor-pointer"
+                              title="Acknowledge Alert"
+                            >
+                              <Check className="w-3.5 h-3.5" />
+                              <span className="text-[11px] font-semibold">Ack</span>
+                            </button>
+                            <button
+                              onClick={() => handleStatusChange(alert.id, 'Dismissed')}
+                              className="p-1.5 rounded-lg border border-slate-200 text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors inline-flex items-center gap-1 cursor-pointer"
+                              title="Dismiss Alert"
+                            >
+                              <XCircle className="w-3.5 h-3.5" />
+                              <span className="text-[11px] font-semibold">Dismiss</span>
+                            </button>
+                          </>
+                        ) : (
+                          <button
+                            onClick={() => handleStatusChange(alert.id, 'Active')}
+                            className="p-1.5 rounded-lg border border-slate-200 text-rose-600 hover:bg-rose-50 transition-colors inline-flex items-center gap-1 cursor-pointer"
+                            title="Reopen Alert"
+                          >
+                            <span className="text-[11px] font-semibold">Reopen</span>
+                          </button>
+                        )}
+                        <button
+                          onClick={() => setSelectedAlert(alert)}
+                          className="p-1.5 rounded-lg border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors inline-flex items-center gap-1 cursor-pointer"
+                          title="View Full Diagnostics"
+                        >
+                          <Eye className="w-3.5 h-3.5" />
+                          <span className="text-[11px] font-semibold">Inspect</span>
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))

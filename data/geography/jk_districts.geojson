@@ -1,0 +1,116 @@
+{
+  "type": "FeatureCollection",
+  "name": "Jammu_and_Kashmir_Study_Districts",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "Jammu",
+      "properties": {
+        "district": "Jammu",
+        "division": "Jammu Division",
+        "center_lat": 32.7266,
+        "center_lon": 74.8570,
+        "elevation_meters": 327,
+        "terrain_type": "Sub-tropical Shivalik Foothills & Outer Plains",
+        "description": "Winter capital of Jammu and Kashmir, low-elevation plain terrain with minimal snow."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [74.68, 32.60],
+            [75.02, 32.58],
+            [75.12, 32.82],
+            [74.90, 32.90],
+            [74.72, 32.80],
+            [74.68, 32.60]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "Srinagar",
+      "properties": {
+        "district": "Srinagar",
+        "division": "Kashmir Valley Division",
+        "center_lat": 34.0837,
+        "center_lon": 74.7973,
+        "elevation_meters": 1585,
+        "terrain_type": "Central Intermontane Valley Basin",
+        "description": "Summer capital of Jammu and Kashmir, central valley surrounded by the Zabarwan and Pir Panjal ranges."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [74.68, 33.98],
+            [74.92, 34.00],
+            [74.96, 34.16],
+            [74.80, 34.20],
+            [74.70, 34.12],
+            [74.68, 33.98]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "Anantnag",
+      "properties": {
+        "district": "Anantnag",
+        "division": "Kashmir Valley Division",
+        "center_lat": 33.7311,
+        "center_lon": 75.1487,
+        "elevation_meters": 1600,
+        "terrain_type": "South Kashmir Valley & Pir Panjal Windward Slopes",
+        "description": "Southern gateway of Kashmir Valley, prone to orographic precipitation and cloud trapped along Pir Panjal."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [75.00, 33.60],
+            [75.32, 33.58],
+            [75.38, 33.85],
+            [75.16, 33.88],
+            [75.02, 33.72],
+            [75.00, 33.60]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "Baramulla",
+      "properties": {
+        "district": "Baramulla",
+        "division": "Kashmir Valley Division",
+        "center_lat": 34.2090,
+        "center_lon": 74.3429,
+        "elevation_meters": 1593,
+        "terrain_type": "North Kashmir Gorge & Kazinag Mountain Pass",
+        "description": "Northern valley district along the Jhelum river gorge with high cold-air pooling and complex microclimates."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [74.18, 34.10],
+            [74.48, 34.12],
+            [74.54, 34.34],
+            [74.26, 34.38],
+            [74.14, 34.22],
+            [74.18, 34.10]
+          ]
+        ]
+      }
+    }
+  ]
+}

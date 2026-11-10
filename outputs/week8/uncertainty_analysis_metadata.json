@@ -1,0 +1,32 @@
+{
+  "analysis_name": "Week 8 Forecast Uncertainty & Regional Reliability Analysis",
+  "domain": "Jammu and Kashmir (4 Study Districts)",
+  "horizon_range_days": [
+    1,
+    10
+  ],
+  "empirically_verified_days": [
+    1,
+    2
+  ],
+  "unobserved_days": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "data_provenance": "GFS forecast matched against ERA5 reanalysis",
+  "total_matched_pairs": 44,
+  "figures_generated": {
+    "uncertainty_vs_lead_day": "outputs/week8/figures/uncertainty_vs_lead_day.png",
+    "district_reliability_decay": "outputs/week8/figures/district_reliability_decay.png",
+    "error_distribution_boxplots": "outputs/week8/figures/error_distribution_boxplots.png",
+    "regional_reliability_choropleth": "outputs/week8/figures/regional_reliability_choropleth.png"
+  },
+  "geojson_artifact": "outputs/week8/regional_reliability_geojson.json",
+  "created_at": "2026-11-10T18:25:03.314327"
+}

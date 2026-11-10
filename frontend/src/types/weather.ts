@@ -70,10 +70,37 @@ export interface AlertItem {
   title: string;
   explanation: string;
   timestamp: string;
-  status: 'Active' | 'Investigating' | 'Resolved';
+  status: 'Active' | 'Investigating' | 'Resolved' | 'Acknowledged' | 'Dismissed';
   variable: 'temperature_c' | 'precipitation_mm';
   forecastValue: number;
   thresholdValue?: number;
+  initializationTime?: string;
+  validTime?: string;
+  modelUsed?: string;
+}
+
+export interface LeadDayUncertaintyRecord {
+  lead_day: number;
+  lead_hours: number;
+  status: 'empirically_verified' | 'unobserved_extended_horizon' | 'unobserved';
+  sample_count: number;
+  mae: number | null;
+  rmse: number | null;
+  bias: number | null;
+  std_error: number | null;
+  median_ae: number | null;
+  iqr: number | null;
+  spread_90_10: number | null;
+  reliability_score: number | null;
+  observation_note?: string;
+  district?: string;
+}
+
+export interface UncertaintyLeadDaysResponse {
+  success: boolean;
+  metadata: Record<string, any>;
+  regionalLeadDayMetrics: LeadDayUncertaintyRecord[];
+  districtMetrics: LeadDayUncertaintyRecord[];
 }
 
 export interface ModelMetricsData {
